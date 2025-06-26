@@ -1,0 +1,45 @@
+# Introduction
+
+Understanding the landscape of higher education institutions in the United States is essential for students, policymakers, and educational organizations alike. Institutions vary significantly in terms of tuition costs, acceptance rates, graduation percentages, and student demographics. Uncovering the latent structure behind these variations can help identify common profiles among colleges and provide insights into the broader educational system.
+
+In this project, we apply unsupervised learning techniques to explore and analyze patterns in a dataset of U.S. colleges. Specifically, we leverage Principal Component Analysis (PCA) for dimensionality reduction and clustering algorithms to group similar institutions based on multiple quantitative features.
+
+The dataset used is the College dataset from the ISLP (Introduction to Statistical Learning with Python) package. It contains observations on 777 U.S. colleges, with variables covering aspects such as costs, enrollment, graduation rates, and student composition.
+
+```{r, include=FALSE}
+datatable(head(College, 100), options = list(scrollX = TRUE))
+```
+
+## Variable Descriptions
+
+The dataset includes a mix of numerical and categorical variables. Key attributes include:
+1.	`Private`: whether the college is private or public.
+2.	`Apps`: number of applications received.
+3.	`Accept`: number of accepted students.
+4.	`Enroll`: number of students enrolled.
+5.	`Top10perc`: percentage of students from the top 10% of their high school class.
+6.	`Top25perc`: percentage from the top 25%.
+7.	`F.Undergrad` , `P.Undergrad`: number of full-time and part-time undergraduates.
+8.	`Outstate`: out-of-state tuition.
+9.	`Room.Board`: estimated room and board cost.
+10.	`Books`: estimated cost of books.
+11.	`Personal`: estimated personal spending.
+12.	`PhD`: percentage of faculty with a PhD.
+13.	`Terminal`: percentage with terminal degrees.
+14.	`S.F.Ratio`: student-faculty ratio.
+15.	`perc.alumni`: percentage of alumni who donate.
+16.	`Expend`: instructional expenditure per student.
+17.	`Grad.Rate`: graduation rate.
+
+```{r, include=FALSE}
+skim(College)
+```
+
+## Analysis Objectives
+
+The primary goal of this project is to uncover underlying patterns in the structure of U.S. colleges using unsupervised learning. We aim to:
+	1.	Conduct univariate analysis to understand the distribution of individual features and explore possible groupings or transformations.
+	2.	Apply Principal Component Analysis (PCA) to reduce the dimensionality of the dataset and identify the main axes of variation.
+	3.	Perform clustering analysis to segment colleges into interpretable groups based on their institutional characteristics.
+
+This exploratory approach helps reveal how colleges can be grouped beyond traditional classifications, offering new perspectives on similarities and differences in the U.S. higher education system.

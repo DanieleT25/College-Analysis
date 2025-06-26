@@ -1,0 +1,11 @@
+book_filename: "Absenteeism-Analysis"
+output_dir: "docs"
+rmd_files: [
+  "Rmd/index.Rmd",
+  "Rmd/01-abstract.Rmd",
+  "Rmd/02-introduction.Rmd",
+  "Rmd/03-univariate.Rmd",
+  "Rmd/04-pca.Rmd",
+  "Rmd/05-clustering.Rmd",
+  "Rmd/06-conclusion.Rmd"
+]

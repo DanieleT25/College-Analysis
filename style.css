@@ -1,0 +1,5 @@
+/* Aumenta la larghezza del contenuto centrale */
+.book .book-body .page-wrapper .page-inner {
+  max-width: 1200px; /* di default è 800px */
+  margin: 0 auto;
+}

@@ -1,0 +1,31 @@
+---
+site: bookdown::bookdown_site
+documentclass: book
+output:
+  bookdown::gitbook:
+    css: ../style.css
+    toc_depth: 2
+    number_sections: true
+---
+
+# Absenteeism Analysis {-}
+
+_Author_: [Daniele Tambone](https://www.linkedin.com/in/daniele-tambone-b5733616a/)
+
+_GitHub project_: [Absenteeism-Analysis](https://github.com/DanieleT25/Absenteeism-Analysis)
+
+_Date_: `r Sys.Date()`
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(ISLR2)
+library(here)
+library(DT)
+library(skimr)
+library(DataExplorer)
+```
+
+This is the report of Unsupervised learning.
