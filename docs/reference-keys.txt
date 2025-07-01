@@ -1,0 +1,9 @@
+introduction
+variable-descriptions
+analysis-objectives
+univariate-analysis
+dimensionality-reduction
+pca
+svd
+clustering
+conclusion

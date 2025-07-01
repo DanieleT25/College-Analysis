@@ -1,1 +1,9 @@
 # Univariate Analysis
+
+```{r, include=FALSE}
+source(here::here("R", "univariateFunction.R"))
+```
+
+```{r echo=FALSE}
+plotHist(College$Apps)
+```

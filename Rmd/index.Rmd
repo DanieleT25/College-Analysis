@@ -8,11 +8,11 @@ output:
     number_sections: true
 ---
 
-# Absenteeism Analysis {-}
+# College-Analysis {-}
 
 _Author_: [Daniele Tambone](https://www.linkedin.com/in/daniele-tambone-b5733616a/)
 
-_GitHub project_: [Absenteeism-Analysis](https://github.com/DanieleT25/Absenteeism-Analysis)
+_GitHub project_: [College-Analysis](https://github.com/DanieleT25/College-Analysis)
 
 _Date_: `r Sys.Date()`
 
@@ -27,5 +27,15 @@ library(DT)
 library(skimr)
 library(DataExplorer)
 ```
+
+
+## Table of Contents {-}
+
+- [Abstract](abstract.html)
+- [1. Introduction](introduction.html)
+- [2. Univariate Analysis](univariate-analysis.html)
+- [3. Dimensionality Reduction](dimensionality-reduction.html)
+- [4. Clustering](clustering.html)
+- [5. Conclusion](conclusion.html)
 
 This is the report of Unsupervised learning.
