@@ -10,7 +10,7 @@ barplotPrivate <- plot_ly(x = summary(College$Private), y = names(summary(Colleg
 barplotPrivate
 ```
 
-```{r echo=FALSE, results='asis'}
+```{r results='asis', warning=FALSE}
 vars <- c("Apps", "Accept", "Enroll", "Top10perc", "Top25perc", "F.Undergrad", "P.Undergrad", "Outstate", "Room.Board", "Books", "Personal", "PhD", "Terminal", "S.F.Ratio", "perc.alumni", "Expend", "Grad.Rate")
 
 titles <- c("Applications", "Students accepted", "Students enrolled", "Top 10%", "Top 25%", "Full-time undergraduates", "Part-time undergraduates", "Out-of-state tuition", "Room and board cost", "Cost of books", "Personal spending", "Percentage of PhD", "Percentage of terminal degrees", "Student-faculty ratio", "Percentage of student donors", "Instructional expenditure", "Graduation rate")

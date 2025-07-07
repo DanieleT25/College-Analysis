@@ -1,0 +1,42 @@
+```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+variable <- get(data)[[var]]
+if(var == "perc.alumni") {
+  variable <- College$perc.alumni[College$perc.alumni > 0]
+  model <- fitDist(variable, type = "realplus", trace=FALSE)
+} else {
+  model <- fitDist(variable, type = "realplus", trace=FALSE)
+}
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r results='hide'}
+pltMod <- plotHistModel(variable, model)
+```
+</div>
+
+<div class='plot-container'>
+```{r results='hide'}
+if (all(is.finite(residuals(pltMod)))) {
+  plot(pltMod)
+} else {
+  warning("Genral plot non eseguito: residui non finiti.")
+}
+```
+</div>
+
+<div class='plot-container'>
+```{r results='hide'}
+if (all(is.finite(residuals(pltMod)))) {
+  suppressWarnings(wp(model, ylim.all = TRUE))
+} else {
+  warning("Worm plot non eseguito: residui non finiti.")
+}
+```
+</div>
+</div>
+
+```{r}
+summary(model)
+```

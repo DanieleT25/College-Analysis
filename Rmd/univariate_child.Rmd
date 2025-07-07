@@ -17,38 +17,15 @@ plotHist(get(data)[[var]], var)
 </div>
 
 #### Distribution Fitting {-}
-```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
-model <- fitDist(get(data)[[var]], type = "realplus", trace=FALSE)
-```
 
-<div class="hscroll-plot">
-<div class='plot-container'>
-```{r results='hide'}
-pltMod <- plotHistModel(get(data)[[var]], model)
-```
-</div>
-
-<div class='plot-container'>
-```{r results='hide', warning=FALSE}
-if (all(is.finite(residuals(pltMod)))) {
-  plot(pltMod)
+```{r results='asis', warning=FALSE}
+if(var %in% c("Outstate", "Books", "Terminal", "Grad.Rate")) {
+  #child_env <- new.env(parent = globalenv())
+  #child_env$data <- College
+  #child_env$var <- var
+  cat(knitr::knit_child("mixModel.Rmd", quiet = TRUE))
+  #cat(knitr::knit_child("mixModel.Rmd", envir = child_env, quiet = TRUE))
 } else {
-  warning("Genral plot non eseguito: residui non finiti.")
+  cat(knitr::knit_child("singleModel.Rmd", quiet = TRUE))
 }
-```
-</div>
-
-<div class='plot-container'>
-```{r results='hide', warning=FALSE}
-if (all(is.finite(residuals(pltMod)))) {
-  suppressWarnings(wp(model, ylim.all = TRUE))
-} else {
-  warning("Worm plot non eseguito: residui non finiti.")
-}
-```
-</div>
-</div>
-
-```{r}
-summary(model)
 ```

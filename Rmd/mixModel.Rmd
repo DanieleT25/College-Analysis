@@ -1,0 +1,47 @@
+```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+if(var == "Outstate") {
+  model <- mixfit(College$Outstate,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+} else if (var == "Books") {
+  model <- mixfit(College$Books,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+} else if (var == "Terminal") {
+  model <- mixfit(College$Terminal,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+} else if (var == "perc.alumni") {
+  model <- mixfit(College$perc.alumni,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+} else {
+  model <- mixfit(College$Grad.Rate,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+}
+```
+
+```{r}
+#names(variable)
+# str(variable)
+# ```
+# ```{r}
+# sum(is.na(variable))  # ci sono NA?
+# ```
+# ```{r}
+# length(unique(na.omit(variable)))
+```
+
+```{r}
+# cat("Data:", data, "\nVar:", var, "\n")
+# print(summary(get(data)[[var]]))
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r results='hide'}
+pltMod <- plotHistModelMix(get(data)[[var]], model)
+```
+</div>
+</div>
