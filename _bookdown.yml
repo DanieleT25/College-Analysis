@@ -1,4 +1,4 @@
-book_filename: "College-Analysis"
+book_filename: "index"
 output_dir: "docs"
 rmd_files: [
   "Rmd/index.Rmd",
