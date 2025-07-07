@@ -16,8 +16,13 @@ _GitHub project_: [College-Analysis](https://github.com/DanieleT25/College-Analy
 
 _Date_: `r Sys.Date()`
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.width = 8,   # larghezza in pollici
+  fig.height = 5   # altezza in pollici
+)
 ```
 
 ```{r, include=FALSE}
@@ -26,6 +31,11 @@ library(here)
 library(DT)
 library(skimr)
 library(DataExplorer)
+#library(dplyr)
+#library(plotly)
+library(gamlss)
+#library(gamlss.mx)
+library(mixR)
 ```
 
 
@@ -35,7 +45,7 @@ library(DataExplorer)
 - [1. Introduction](introduction.html)
 - [2. Univariate Analysis](univariate-analysis.html)
 - [3. Dimensionality Reduction](dimensionality-reduction.html)
-- [4. Clustering](clustering.html)
+- [4. Cluster Analysis](clustering.html)
 - [5. Conclusion](conclusion.html)
 
 This is the report of Unsupervised learning.

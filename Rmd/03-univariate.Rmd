@@ -1,9 +1,27 @@
 # Univariate Analysis
-
-```{r, include=FALSE}
+```{r include=FALSE}
 source(here::here("R", "univariateFunction.R"))
 ```
 
-```{r echo=FALSE}
-plotHist(College$Apps)
+### Private {-}
+```{r}
+barplotPrivate <- plot_ly(x = summary(College$Private), y = names(summary(College$Private)), type = 'bar', orientation = 'h')
+
+barplotPrivate
+```
+
+```{r echo=FALSE, results='asis'}
+vars <- c("Apps", "Accept", "Enroll", "Top10perc", "Top25perc", "F.Undergrad", "P.Undergrad", "Outstate", "Room.Board", "Books", "Personal", "PhD", "Terminal", "S.F.Ratio", "perc.alumni", "Expend", "Grad.Rate")
+
+titles <- c("Applications", "Students accepted", "Students enrolled", "Top 10%", "Top 25%", "Full-time undergraduates", "Part-time undergraduates", "Out-of-state tuition", "Room and board cost", "Cost of books", "Personal spending", "Percentage of PhD", "Percentage of terminal degrees", "Student-faculty ratio", "Percentage of student donors", "Instructional expenditure", "Graduation rate")
+
+for (i in seq_along(vars)) {
+  env <- list2env(list(
+    var = vars[i], 
+    title = titles[i], 
+    data = "College"
+  ))
+  
+  cat(knitr::knit_child("Rmd/univariate_child.Rmd", envir = env, quiet = TRUE))
+}
 ```
