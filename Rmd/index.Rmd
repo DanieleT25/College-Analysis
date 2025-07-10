@@ -1,4 +1,5 @@
 ---
+title: "College analysis"
 site: bookdown::bookdown_site
 documentclass: book
 output:
@@ -8,7 +9,9 @@ output:
     number_sections: true
 ---
 
-# Index
+# Index {-}
+
+_Project's name_: College-Analysis
 
 _Author_: [Daniele Tambone](https://www.linkedin.com/in/daniele-tambone-b5733616a/)
 
@@ -36,6 +39,12 @@ library(DataExplorer)
 library(gamlss)
 #library(gamlss.mx)
 library(mixR)
+
+library(corrplot)
+library(factoextra)
+library(knitr)
+library(kableExtra)
+library(dplyr)
 ```
 
 

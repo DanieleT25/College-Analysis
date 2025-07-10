@@ -1,5 +1,119 @@
 # Dimensionality Reduction
 
-## PCA
+```{r}
+source(here::here("R", "dimReducFunction.R"))
+```
 
-## SVD
+```{r}
+num_data <- College[sapply(College, is.numeric)]
+corr_matrix <- cor(num_data)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+pairs(College[sapply(College, is.numeric)], gap=0, pch=16, cex=0.4)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+corrplot.mixed(
+  corr_matrix,
+  lower = 'number',
+  upper = 'pie',
+  order = 'AOE',
+  tl.cex = 0.7,        # riduce la dimensione delle etichette
+  tl.col = "black",    # colore del testo
+  tl.pos = "lt",       # posizione delle etichette (left-top)
+  number.cex = 0.7     # grandezza dei numeri
+)
+```
+</div>
+</div>
+
+### PCA {-}
+
+```{r}
+pca <- prcomp(num_data, scale. = TRUE)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+screePlot(pca)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+screePlot(pca, TRUE)
+```
+</div>
+</div>
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_pca_var(pca,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+             )
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_pca_ind(pca,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             label = 'none'
+             )
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+groups <- as.factor(College$Private)
+
+# Plot con fviz_pca_ind()
+fviz_pca_ind(pca,
+             col.ind = groups, # Colora in base a 'Private'
+             palette = c("#00AFBB", "#FC4E07"), # Puoi cambiarli
+             addEllipses = TRUE,
+             ellipse.type = "confidence",
+             legend.title = "Private",
+             label = 'none')
+```
+</div>
+</div>
+
+**PCA Loadings (|loading| > 0.3)**
+
+<div class="hscroll-plot" style="height: 700px;">
+<div class='plot-container'>
+```{r}
+n_pc <- 17
+threshold <- 0.3
+
+plotLoadingsTable(pca, n_pc, threshold)
+```
+</div>
+</div>
+
+#### Choosing the number of PCs {-}
+
+Let's apply **Kaiser's rule**
+
+```{r fig.width=12, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
+kaiserRule(pca)
+```
+
+The PC four is on the line and the variable that it explain better are inside the first PC.
+
+Then we select only the first 3 components:
+
+* **PC1 – Academic Prestige and Student Spending**: This component captures the level of academic prestige and quality of a college. High values indicate selective institutions with good resources and qualified faculty.
+* **PC2 – Size and Enrollment Volume**: This component appears to reflect the size of the institution and the scale of its admissions process. Low values correspond to large, highly attended colleges.
+* **PC3 – Personal and Book Expenses**: Personal and Book Expenses: A component that seems to reflect student-related out-of-pocket expenses. Negative values indicate higher costs for personal living and study materials.

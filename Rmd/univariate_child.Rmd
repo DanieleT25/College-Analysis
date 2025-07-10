@@ -23,9 +23,9 @@ if(var %in% c("Outstate", "Books", "Terminal", "Grad.Rate")) {
   #child_env <- new.env(parent = globalenv())
   #child_env$data <- College
   #child_env$var <- var
-  cat(knitr::knit_child("mixModel.Rmd", quiet = TRUE))
+  cat(knitr::knit_child(here::here("Rmd","mixModel.Rmd"), quiet = TRUE))
   #cat(knitr::knit_child("mixModel.Rmd", envir = child_env, quiet = TRUE))
 } else {
-  cat(knitr::knit_child("singleModel.Rmd", quiet = TRUE))
+  cat(knitr::knit_child(here::here("Rmd", "singleModel.Rmd"), quiet = TRUE))
 }
 ```

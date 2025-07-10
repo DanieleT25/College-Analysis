@@ -9,3 +9,4 @@ rmd_files: [
   "Rmd/05-clustering.Rmd",
   "Rmd/06-conclusion.Rmd"
 ]
+clean: TRUE

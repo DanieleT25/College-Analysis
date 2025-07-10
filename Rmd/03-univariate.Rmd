@@ -1,5 +1,5 @@
 # Univariate Analysis
-```{r include=FALSE}
+```{r}
 source(here::here("R", "univariateFunction.R"))
 ```
 
@@ -22,6 +22,6 @@ for (i in seq_along(vars)) {
     data = "College"
   ))
   
-  cat(knitr::knit_child("Rmd/univariate_child.Rmd", envir = env, quiet = TRUE))
+  cat(knitr::knit_child(here::here("Rmd", "univariate_child.Rmd"), envir = env, quiet = TRUE))
 }
 ```
