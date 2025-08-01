@@ -6,7 +6,8 @@ rmd_files: [
   "Rmd/02-introduction.Rmd",
   "Rmd/03-univariate.Rmd",
   "Rmd/04-dimensionality_reduction.Rmd",
-  "Rmd/05-clustering.Rmd",
+  "Rmd/05-cluster_analysis.Rmd",
   "Rmd/06-conclusion.Rmd"
 ]
 clean: TRUE
+

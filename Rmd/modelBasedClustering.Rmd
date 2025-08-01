@@ -1,0 +1,31 @@
+### Model Based Clustering
+
+```{r}
+mbc <- Mclust(dataScale)
+fviz_mclust(mbc, "BIC", palette = "Okabe-Ito")
+```
+
+```{r}
+summary(mbc$BIC)
+```
+
+```{r}
+summary(mbc)
+```
+```{r}
+mbc$parameters$pro
+
+mbc$parameters$mean
+```
+
+
+
+```{r}
+fviz_mclust(mbc, "classification", palette = "Okabe-Ito", geom = "point", ellipse.type = "norm", ggtheme = theme_minimal(), labelsize = 0)
+```
+
+```{r}
+fviz_mclust(mbc, "uncertainty", palette = "Okabe-Ito")
+```
+
+

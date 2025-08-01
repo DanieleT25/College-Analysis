@@ -1,0 +1,87 @@
+# Cluster Analysis
+
+```{r}
+source(here::here("R", "caFunction.R"))
+```
+
+## Feasibility of the cluster analysis 
+
+```{r}
+random_df <- as.data.frame(apply(num_data, 2, function(x){
+  runif(length(x), min(x), max(x))
+}))
+
+df <- scale(num_data)
+random_df <- scale(random_df)
+```
+
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+#library(ggpubr)
+jco_colors <- get_palette("jco", 2)
+
+colors <- ifelse(College$Private == "Yes", jco_colors[1], jco_colors[2])
+
+pairs(df, gap=0, pch=16, cex=0.4, col = colors)
+```
+</div>
+<div class='plot-container'>
+```{r}
+pairs(random_df, gap=0, pch=16, cex=0.4)
+```
+</div>
+</div>
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_pca_ind(pca, title="PCA - College data", habillage=College$Private, palette="jco", geom="point", ggtheme=theme_classic(), legend="bottom")
+```
+</div>
+<div class='plot-container'>
+```{r}
+fviz_pca_ind(prcomp(random_df), title="PCA - Random data", geom="point", ggtheme=theme_classic())
+```
+</div>
+</div>
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_dist(dist(df), show_labels=FALSE) + labs(title="College data")
+```
+</div>
+<div class='plot-container'>
+```{r}
+fviz_dist(dist(random_df), show_labels=FALSE) + labs(title="College data")
+```
+</div>
+</div>
+
+```{r warning=FALSE}
+set.seed(123)
+hopkinsValue <- clustertend::hopkins(df, n=nrow(df)-1)
+```
+
+The hopkins value is `r hopkinsValue`.
+
+## Hard clustering
+
+```{r child="Rmd/hierarchicalClustering.Rmd"}
+```
+
+```{r child="Rmd/partitionalClustering.Rmd"}
+```
+
+```{r child="Rmd/clValidation.Rmd"}
+```
+
+## Soft Clustering
+
+```{r child="Rmd/fuzzyClustering.Rmd"}
+```
+
+```{r child="Rmd/modelBasedClustering.Rmd"}
+```

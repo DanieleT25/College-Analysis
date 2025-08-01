@@ -1,0 +1,210 @@
+### Partional clustering
+
+#### K-means {-}
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, kmeans, method="wss") + geom_vline(xintercept = 5, linetype=2) + labs(subtitle = "K-means: Elbow method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, kmeans, method="silhouette") + labs(subtitle = "K-means: Silhouette method")
+```
+</div>
+</div>
+
+##### NbClust function {-}
+```{r}
+nb_kmean <- NbClust(df, min.nc=2, max.nc=10, method="kmeans")
+```
+
+##### Three clusters {-}
+
+```{r}
+kmeans3 <- eclust(df, "kmeans", k = 3, graph = FALSE)
+```
+
+```{r}
+fviz_cluster(kmeans3, ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!-- ``` -->
+
+#### K-means++ {-}
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, KMeans_rcpp, method = "wss") +
+  geom_vline(xintercept = 6, linetype = 2) +
+  labs(subtitle = "K-means++: Elbow method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, KMeans_rcpp, method = "silhouette") +
+  labs(subtitle = "K-means++:  Silhouette method")
+```
+</div>
+</div>
+
+##### Two clusters {-}
+
+```{r}
+kmeansPlus2 <- KMeans_rcpp(df, 2)
+fviz_cluster(list(data=df, cluster=kmeansPlus2$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+
+<!-- ```{r} -->
+<!-- # fviz_silhouette(res, palette="jco", ggthem=theme_classic()) -->
+
+
+<!-- #library(cluster) -->
+<!-- #library(factoextra) -->
+
+<!-- # Calcola la matrice di distanza -->
+<!-- dist_matrix <- dist(df) -->
+
+<!-- # Calcola silhouette manualmente -->
+<!-- sil <- silhouette(res$clusters, dist_matrix) -->
+
+<!-- # Visualizza silhouette -->
+<!-- fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic()) -->
+<!-- ``` -->
+
+#### K-medoids {-}
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, pam, method = "silhouette", metric="euclidean") +
+  labs(subtitle = "K-medoids(euclidean): Silhouette method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, pam, method = "silhouette", metric="manhattan") +
+  labs(subtitle = "K-medoids(manhattan): Silhouette method")
+```
+</div>
+</div>
+
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+kmedoidsEucl3 <- pam(df, 3, metric = "euclidean")
+fviz_cluster(list(data=df, cluster=kmedoidsEucl3$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+kmedoidsManh3 <- pam(df, 3, metric = "manhattan")
+fviz_cluster(list(data=df, cluster=kmedoidsManh3$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+</div>
+</div>
+
+#### Density-based clustering {-}
+
+
+From [Documentation of dbscan package](https://cran.r-project.org/web/packages/dbscan/refman/dbscan.html#dbscan) function dbscan
+
+**Setting parameters for DBSCAN**
+
+The parameters minPts and eps define the minimum density required in the area around core points which form the backbone of clusters. minPts is the number of points required in the neighborhood around the point defined by the parameter eps (i.e., the radius around the point). Both parameters depend on each other and changing one typically requires changing the other one as well. The parameters also depend on the size of the data set with larger datasets requiring a larger minPts or a smaller eps.
+
+* ⁠minPts:⁠ The original DBSCAN paper (Ester et al, 1996) suggests to start by setting $minPts \geq d + 1$, the data dimensionality plus one or higher with a minimum of 3. Larger values are preferable since increasing the parameter suppresses more noise in the data by requiring more points to form clusters. Sander et al (1998) uses in the examples two times the data dimensionality. Note that setting 
+$minPts \leq 2$ is equivalent to hierarchical clustering with the single link metric and the dendrogram cut at height eps.
+
+* ⁠eps:⁠ A suitable neighborhood size parameter eps given a fixed value for minPts can be found visually by inspecting the kNNdistplot() of the data using $k=minPts−1$ (minPts includes the point itself, while the k-nearest neighbors distance does not). The k-nearest neighbor distance plot sorts all data points by their k-nearest neighbor distance. A sudden increase of the kNN distance (a knee) indicates that the points to the right are most likely outliers. Choose eps for DBSCAN where the knee is.
+
+```{r}
+minPts <- ncol(df)+1
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+kNNdistplot(df, minPts-1, minPts)
+abline(h = 4, lty = 2)
+```
+</div>
+
+```{r}
+eps <- 4
+res <- dbscan(df, eps, minPts)
+```
+
+<div class='plot-container'>
+```{r}
+hullplot(df, res)
+```
+</div>
+</div>
+
+##### Optics {-}
+
+```{r}
+resOptics <- optics(df, minPts = minPts)
+```
+
+```{r}
+plot(resOptics)
+#abline(h = 1.61, col="red", lty = 2)
+```
+
+```{r}
+resOpt <- extractDBSCAN(resOptics, eps_cl = 1.61)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+plot(resOpt)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+hullplot(df, resOpt)
+```
+</div>
+</div>
+
+```{r}
+resXi <- extractXi(resOptics, xi=0.01)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+plot(resXi)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+hullplot(df, resXi)
+```
+</div>
+</div>
+
+```{r}
+dendOpt <- as.dendrogram(resXi)
+dendOpt
+```
+
+```{r}
+plot(dendOpt, ylab = "Reachability dist.", leaflab = "none")
+```

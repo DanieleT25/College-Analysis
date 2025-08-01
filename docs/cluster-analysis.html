@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Cluster Analysis | College analysis</title>
+  <meta name="description" content="4 Cluster Analysis | College analysis" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Cluster Analysis | College analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Cluster Analysis | College analysis" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dimensionality-reduction.html"/>
+<link rel="next" href="conclusion.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Index</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i>Table of Contents</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="abstract.html"><a href="abstract.html"><i class="fa fa-check"></i>Abstract</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="univariate-analysis.html"><a href="univariate-analysis.html"><i class="fa fa-check"></i><b>2</b> Univariate Analysis</a></li>
+<li class="chapter" data-level="3" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>3</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="4" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>4</b> Cluster Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cluster-analysis.html"><a href="cluster-analysis.html#feasibility-of-the-cluster-analysis"><i class="fa fa-check"></i><b>4.1</b> Feasibility of the cluster analysis</a></li>
+<li class="chapter" data-level="4.2" data-path="cluster-analysis.html"><a href="cluster-analysis.html#hard-clustering"><i class="fa fa-check"></i><b>4.2</b> Hard clustering</a></li>
+<li class="chapter" data-level="4.3" data-path="cluster-analysis.html"><a href="cluster-analysis.html#soft-clustering"><i class="fa fa-check"></i><b>4.3</b> Soft Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">College analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cluster-analysis" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Cluster Analysis<a href="cluster-analysis.html#cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="feasibility-of-the-cluster-analysis" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Feasibility of the cluster analysis<a href="cluster-analysis.html#feasibility-of-the-cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
+</div>
+</div>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
+</div>
+</div>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="768" /></p>
+</div>
+</div>
+<p>The hopkins value is 0.1389425.</p>
+</div>
+<div id="hard-clustering" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Hard clustering<a href="cluster-analysis.html#hard-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="hierarchical-clustering" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Hierarchical clustering<a href="cluster-analysis.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Correlations
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+euclidean_single
+</td>
+<td style="text-align:left;">
+0.7038
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+euclidean_complete
+</td>
+<td style="text-align:left;">
+0.6547
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+euclidean_average
+</td>
+<td style="text-align:left;font-weight: bold;">
+0.7987
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+euclidean_ward.D2
+</td>
+<td style="text-align:left;">
+0.4471
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+manhattan_single
+</td>
+<td style="text-align:left;">
+0.6272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+manhattan_complete
+</td>
+<td style="text-align:left;">
+0.5267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+manhattan_average
+</td>
+<td style="text-align:left;font-weight: bold;">
+0.7605
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+manhattan_ward.D2
+</td>
+<td style="text-align:left;">
+0.4633
+</td>
+</tr>
+</tbody>
+</table>
+<div id="hierarchical-clustering-with-euclidean-distance-and-average-linked-method" class="section level4 unnumbered hasAnchor">
+<h4>Hierarchical clustering with euclidean distance and average linked method<a href="cluster-analysis.html#hierarchical-clustering-with-euclidean-distance-and-average-linked-method" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-449-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-450-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-451-1.png" width="768" /></p>
+</div>
+</div>
+<div id="nbclust-function" class="section level5 unnumbered hasAnchor">
+<h5>NbClust function<a href="cluster-analysis.html#nbclust-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## [1] &quot;Frey index : No clustering structure in this data set&quot;</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-452-1.png" width="768" /></p>
+<pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-452-2.png" width="768" /></p>
+<pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 8 proposed 2 as the best number of clusters 
+## * 4 proposed 3 as the best number of clusters 
+## * 1 proposed 4 as the best number of clusters 
+## * 7 proposed 5 as the best number of clusters 
+## * 1 proposed 8 as the best number of clusters 
+## * 1 proposed 9 as the best number of clusters 
+## * 1 proposed 10 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  2 
+##  
+##  
+## *******************************************************************</code></pre>
+</div>
+<div id="two-clusters" class="section level5 unnumbered hasAnchor">
+<h5>Two clusters<a href="cluster-analysis.html#two-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="hscroll-plot" style="height:550px">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-453-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-454-1.png" width="768" /></p>
+</div>
+</div>
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!-- ``` -->
+</div>
+<div id="five-clusters" class="section level5 unnumbered hasAnchor">
+<h5>Five clusters<a href="cluster-analysis.html#five-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="hscroll-plot" style="height:550px">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-455-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-456-1.png" width="768" /></p>
+</div>
+</div>
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!-- ``` -->
+</div>
+</div>
+<div id="hierarchical-clustering-with-manhattan-distance-and-average-linked-method" class="section level4 unnumbered hasAnchor">
+<h4>Hierarchical clustering with manhattan distance and average linked method<a href="cluster-analysis.html#hierarchical-clustering-with-manhattan-distance-and-average-linked-method" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-457-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-458-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-459-1.png" width="768" /></p>
+</div>
+</div>
+<div id="nbclust-function-1" class="section level5 unnumbered hasAnchor">
+<h5>NbClust function<a href="cluster-analysis.html#nbclust-function-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="index_files/figure-html/unnamed-chunk-460-1.png" width="768" /></p>
+<pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-460-2.png" width="768" /></p>
+<pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 11 proposed 2 as the best number of clusters 
+## * 1 proposed 3 as the best number of clusters 
+## * 1 proposed 5 as the best number of clusters 
+## * 2 proposed 6 as the best number of clusters 
+## * 1 proposed 7 as the best number of clusters 
+## * 6 proposed 8 as the best number of clusters 
+## * 2 proposed 10 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  2 
+##  
+##  
+## *******************************************************************</code></pre>
+</div>
+<div id="two-clusters-1" class="section level5 unnumbered hasAnchor">
+<h5>Two clusters<a href="cluster-analysis.html#two-clusters-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="hscroll-plot" style="height:550px">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-461-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-462-1.png" width="768" /></p>
+</div>
+</div>
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!-- ``` -->
+</div>
+<div id="eight-clusters" class="section level5 unnumbered hasAnchor">
+<h5>Eight clusters<a href="cluster-analysis.html#eight-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="hscroll-plot" style="height:550px">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-463-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-464-1.png" width="768" /></p>
+</div>
+</div>
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!--``` -->
+</div>
+</div>
+</div>
+<div id="partional-clustering" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Partional clustering<a href="cluster-analysis.html#partional-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="k-means" class="section level4 unnumbered hasAnchor">
+<h4>K-means<a href="cluster-analysis.html#k-means" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-485-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-486-1.png" width="768" /></p>
+</div>
+</div>
+<div id="nbclust-function-2" class="section level5 unnumbered hasAnchor">
+<h5>NbClust function<a href="cluster-analysis.html#nbclust-function-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="index_files/figure-html/unnamed-chunk-487-1.png" width="768" /></p>
+<pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-487-2.png" width="768" /></p>
+<pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 4 proposed 2 as the best number of clusters 
+## * 15 proposed 3 as the best number of clusters 
+## * 1 proposed 7 as the best number of clusters 
+## * 1 proposed 8 as the best number of clusters 
+## * 1 proposed 9 as the best number of clusters 
+## * 1 proposed 10 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  3 
+##  
+##  
+## *******************************************************************</code></pre>
+</div>
+<div id="three-clusters" class="section level5 unnumbered hasAnchor">
+<h5>Three clusters<a href="cluster-analysis.html#three-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="index_files/figure-html/unnamed-chunk-489-1.png" width="768" /></p>
+<!-- ```{r} -->
+<!-- fviz_silhouette(hc, palette="jco", ggthem=theme_classic()) -->
+<!-- ``` -->
+</div>
+</div>
+<div id="k-means-1" class="section level4 unnumbered hasAnchor">
+<h4>K-means++<a href="cluster-analysis.html#k-means-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-490-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-491-1.png" width="768" /></p>
+</div>
+</div>
+<div id="two-clusters-2" class="section level5 unnumbered hasAnchor">
+<h5>Two clusters<a href="cluster-analysis.html#two-clusters-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="index_files/figure-html/unnamed-chunk-492-1.png" width="768" /></p>
+<!-- ```{r} -->
+<!-- # fviz_silhouette(res, palette="jco", ggthem=theme_classic()) -->
+<!-- #library(cluster) -->
+<!-- #library(factoextra) -->
+<!-- # Calcola la matrice di distanza -->
+<!-- dist_matrix <- dist(df) -->
+<!-- # Calcola silhouette manualmente -->
+<!-- sil <- silhouette(res$clusters, dist_matrix) -->
+<!-- # Visualizza silhouette -->
+<!-- fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic()) -->
+<!-- ``` -->
+</div>
+</div>
+<div id="k-medoids" class="section level4 unnumbered hasAnchor">
+<h4>K-medoids<a href="cluster-analysis.html#k-medoids" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-493-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-494-1.png" width="768" /></p>
+</div>
+</div>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-495-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-496-1.png" width="768" /></p>
+</div>
+</div>
+</div>
+<div id="density-based-clustering" class="section level4 unnumbered hasAnchor">
+<h4>Density-based clustering<a href="cluster-analysis.html#density-based-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>From <a href="https://cran.r-project.org/web/packages/dbscan/refman/dbscan.html#dbscan">Documentation of dbscan package</a> function dbscan</p>
+<p><strong>Setting parameters for DBSCAN</strong></p>
+<p>The parameters minPts and eps define the minimum density required in the area around core points which form the backbone of clusters. minPts is the number of points required in the neighborhood around the point defined by the parameter eps (i.e., the radius around the point). Both parameters depend on each other and changing one typically requires changing the other one as well. The parameters also depend on the size of the data set with larger datasets requiring a larger minPts or a smaller eps.</p>
+<ul>
+<li><p>⁠minPts:⁠ The original DBSCAN paper (Ester et al, 1996) suggests to start by setting <span class="math inline">\(minPts \geq d + 1\)</span>, the data dimensionality plus one or higher with a minimum of 3. Larger values are preferable since increasing the parameter suppresses more noise in the data by requiring more points to form clusters. Sander et al (1998) uses in the examples two times the data dimensionality. Note that setting
+<span class="math inline">\(minPts \leq 2\)</span> is equivalent to hierarchical clustering with the single link metric and the dendrogram cut at height eps.</p></li>
+<li><p>⁠eps:⁠ A suitable neighborhood size parameter eps given a fixed value for minPts can be found visually by inspecting the kNNdistplot() of the data using <span class="math inline">\(k=minPts−1\)</span> (minPts includes the point itself, while the k-nearest neighbors distance does not). The k-nearest neighbor distance plot sorts all data points by their k-nearest neighbor distance. A sudden increase of the kNN distance (a knee) indicates that the points to the right are most likely outliers. Choose eps for DBSCAN where the knee is.</p></li>
+</ul>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-498-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-500-1.png" width="768" /></p>
+</div>
+</div>
+<div id="optics" class="section level5 unnumbered hasAnchor">
+<h5>Optics<a href="cluster-analysis.html#optics" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="index_files/figure-html/unnamed-chunk-502-1.png" width="768" /></p>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-504-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<pre><code>## Warning in hullplot(df, resOpt): Not enough colors. Some colors will
+## be reused.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-505-1.png" width="768" /></p>
+</div>
+</div>
+<div class="hscroll-plot">
+<div class="plot-container">
+<p><img src="index_files/figure-html/unnamed-chunk-507-1.png" width="768" /></p>
+</div>
+<div class="plot-container">
+<pre><code>## Warning in hullplot(df, resXi): Not enough colors. Some colors will
+## be reused.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-508-1.png" width="768" /></p>
+</div>
+</div>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 777 members total, at height 8.202386</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-510-1.png" width="768" /></p>
+</div>
+</div>
+</div>
+<div id="cluster-validation" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Cluster validation<a href="cluster-analysis.html#cluster-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+Method
+</th>
+<th style="text-align:center;">
+APN
+</th>
+<th style="text-align:center;">
+AD
+</th>
+<th style="text-align:center;">
+ADM
+</th>
+<th style="text-align:center;">
+FOM
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+HC - Euclidean - Avg - k=2
+</td>
+<td style="text-align:center;">
+0.0003
+</td>
+<td style="text-align:center;">
+5.3248
+</td>
+<td style="text-align:center;">
+0.0075
+</td>
+<td style="text-align:center;">
+0.9988
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HC - Euclidean - Avg - k=5
+</td>
+<td style="text-align:center;">
+0.0090
+</td>
+<td style="text-align:center;">
+5.1870
+</td>
+<td style="text-align:center;">
+0.1195
+</td>
+<td style="text-align:center;">
+0.9812
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HC - Manhattan - Avg - k=2
+</td>
+<td style="text-align:center;">
+0.0100
+</td>
+<td style="text-align:center;">
+17.0750
+</td>
+<td style="text-align:center;">
+0.1067
+</td>
+<td style="text-align:center;">
+0.9968
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HC - Manhattan - Avg - k=8
+</td>
+<td style="text-align:center;">
+0.0762
+</td>
+<td style="text-align:center;">
+14.6278
+</td>
+<td style="text-align:center;">
+0.7625
+</td>
+<td style="text-align:center;">
+0.8614
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+KMeans - k=3
+</td>
+<td style="text-align:center;">
+0.0446
+</td>
+<td style="text-align:center;">
+4.3166
+</td>
+<td style="text-align:center;">
+0.1900
+</td>
+<td style="text-align:center;">
+0.8142
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+KMeans++ - k=2
+</td>
+<td style="text-align:center;">
+0.2790
+</td>
+<td style="text-align:center;">
+5.1583
+</td>
+<td style="text-align:center;">
+1.4171
+</td>
+<td style="text-align:center;">
+0.9792
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+KMedoids - Euclidean - k=3
+</td>
+<td style="text-align:center;">
+0.1047
+</td>
+<td style="text-align:center;">
+4.3950
+</td>
+<td style="text-align:center;">
+0.4561
+</td>
+<td style="text-align:center;">
+0.8357
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+KMedoids - Manhattan - k=3
+</td>
+<td style="text-align:center;">
+0.1116
+</td>
+<td style="text-align:center;">
+13.6128
+</td>
+<td style="text-align:center;">
+0.4865
+</td>
+<td style="text-align:center;">
+0.8384
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## Best APN: &quot;HC - Euclidean - Avg - k=2&quot;
+## Best AD: &quot;KMeans - k=3&quot;
+## Best ADM: &quot;HC - Euclidean - Avg - k=2&quot;
+## Best FOM: &quot;KMeans - k=3&quot;</code></pre>
+</div>
+</div>
+<div id="soft-clustering" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Soft Clustering<a href="cluster-analysis.html#soft-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="fuzzy-clustering" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Fuzzy Clustering<a href="cluster-analysis.html#fuzzy-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="fuzzy-k-means-with-entropy-regularization-and-noise-cluster" class="section level4 unnumbered hasAnchor">
+<h4>Fuzzy k-Means with Entropy regularization and Noise cluster<a href="cluster-analysis.html#fuzzy-k-means-with-entropy-regularization-and-noise-cluster" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## The default value k=2:6 has been set 
+## The default value alpha=1 has been set for computing SIL.F 
+## The default value k=2:6 has been set 
+## The default value k=2:6 has been set 
+## The default value k=2:6 has been set 
+## The default value k=2:6 has been set</code></pre>
+<pre><code>## SIL.F k=2 SIL.F k=3 SIL.F k=4 SIL.F k=5 SIL.F k=6 
+## 0.3518378 0.3735748 0.3156925 0.2980328 0.2237030</code></pre>
+<pre><code>##    PC k=2    PC k=3    PC k=4    PC k=5    PC k=6 
+## 0.7949485 0.8783218 0.8910608 0.8914083 0.8325891</code></pre>
+<pre><code>##     PE k=2     PE k=3     PE k=4     PE k=5     PE k=6 
+## 0.07165039 0.08514369 0.10977413 0.13535170 0.23454366</code></pre>
+<pre><code>##   MPC k=2   MPC k=3   MPC k=4   MPC k=5   MPC k=6 
+## 0.5898970 0.8174826 0.8547477 0.8642603 0.7991070</code></pre>
+<pre><code>##    XB k=2    XB k=3    XB k=4    XB k=5    XB k=6 
+## 0.4991835 0.5150927 0.7636770 0.8387996 1.3164018</code></pre>
+<pre><code>## Number of clusters 
+##                  3</code></pre>
+<pre><code>## Number of clusters 
+##                  5</code></pre>
+<pre><code>## Number of clusters 
+##                  2</code></pre>
+<pre><code>## Number of clusters 
+##                  5</code></pre>
+<pre><code>## Number of clusters 
+##                  2</code></pre>
+<pre><code>##                              Cluster Membership degree
+## Abilene Christian University       2         0.9610382
+## Adelphi University                 1         0.9999950
+## Adrian College                     1         0.9957558
+## Agnes Scott College                4         0.9971864
+## Alaska Pacific University          1         0.8088654
+## Albertson College                  1         0.5552706</code></pre>
+<pre><code>## Clus 1 Clus 2 Clus 3 Clus 4 Clus 5 
+##    234    136    257     79     71</code></pre>
+<pre><code>##               Apps     Accept       Enroll  Top10perc  Top25perc
+## Clus 1 -0.54137538 -0.5351253 -0.538923862 -0.5966849 -0.7020602
+## Clus 2  0.07689591  0.1136329  0.283270904 -0.6227619 -0.4939817
+## Clus 3 -0.31730018 -0.2847494 -0.360531417  0.1904085  0.2874775
+## Clus 4  0.47419033  0.1209702 -0.006628197  1.8775245  1.5431584
+## Clus 5  1.92067978  2.0968591  2.271866624  0.3662210  0.5098355
+##        F.Undergrad P.Undergrad   Outstate  Room.Board      Books
+## Clus 1  -0.5154902  -0.2930539 -0.4239532 -0.44847274 -0.1825171
+## Clus 2   0.3416659   0.4792947 -0.9983571 -0.67055186 -0.1282861
+## Clus 3  -0.3910031  -0.3011845  0.4908779  0.40359085 -0.1190813
+## Clus 4  -0.1366687  -0.4331529  1.7885234  1.22211407  0.2162587
+## Clus 5   2.3705990   1.0471669 -0.5123726 -0.09404339  0.4208635
+##          Personal        PhD   Terminal   S.F.Ratio perc.alumni
+## Clus 1 -0.0469895 -1.0291194 -1.0742529 -0.03092423  -0.3169182
+## Clus 2  0.4157752  0.1387467  0.1430822  0.94695331  -0.7922122
+## Clus 3 -0.3238237  0.3495636  0.3790103 -0.26413957   0.4572679
+## Clus 4 -0.4932708  1.1529243  1.1030845 -1.16439626   1.3160856
+## Clus 5  0.7513817  0.7247458  0.7029449  0.52421356  -0.5151477
+##             Expend  Grad.Rate
+## Clus 1 -0.43950502 -0.4060492
+## Clus 2 -0.58583948 -0.7978678
+## Clus 3  0.05687871  0.4921093
+## Clus 4  1.84395015  1.1582849
+## Clus 5 -0.01212232 -0.1701036</code></pre>
+<pre><code>##      
+##         1   2   3   4   5
+##   No   20 115  13   2  62
+##   Yes 213  20 245  78   9</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-554-1.png" width="768" /><img src="index_files/figure-html/unnamed-chunk-554-2.png" width="768" /></p>
+<pre><code>##                              Cluster Membership degree
+## Abilene Christian University       2         0.9999972
+## Adelphi University                 2         0.1110816
+## Adrian College                     2         0.9992632
+## Agnes Scott College                1         0.9999842
+## Alaska Pacific University          2         0.9995104
+## Albertson College                  2         0.7586947</code></pre>
+<pre><code>## Clus 1 Clus 2 
+##    332    445</code></pre>
+<pre><code>##              Apps     Accept     Enroll  Top10perc  Top25perc
+## Clus 1 -0.2149199 -0.2054683 -0.3133702  0.4724341  0.5528991
+## Clus 2 -0.3263829 -0.3104453 -0.2646493 -0.5648155 -0.5783010
+##        F.Undergrad P.Undergrad   Outstate Room.Board       Books
+## Clus 1  -0.3577905 -0.32906262  0.7981845  0.5704195 -0.09456016
+## Clus 2  -0.2365310 -0.09661831 -0.5922648 -0.4892622 -0.17300438
+##           Personal        PhD   Terminal  S.F.Ratio perc.alumni
+## Clus 1 -0.42180706  0.5383577  0.5653001 -0.4261338   0.6707884
+## Clus 2  0.06841061 -0.5416341 -0.5745737  0.2948646  -0.4206397
+##            Expend  Grad.Rate
+## Clus 1  0.3328676  0.6235172
+## Clus 2 -0.4913391 -0.4637270</code></pre>
+<pre><code>##      
+##         1   2
+##   No   32 180
+##   Yes 299 266</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-556-1.png" width="768" /><img src="index_files/figure-html/unnamed-chunk-556-2.png" width="768" /></p>
+</div>
+<div id="fk-med-algorithm-with-noise-cluster-fk-medn-algorithm" class="section level4 unnumbered hasAnchor">
+<h4>FK-Med algorithm with Noise cluster (FK MedN algorithm)<a href="cluster-analysis.html#fk-med-algorithm-with-noise-cluster-fk-medn-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## The default value k=2:6 has been set 
+## The default index SIL.F has been set 
+## The default value alpha=1 has been set for computing SIL.F</code></pre>
+<pre><code>##  SIL.F k=2  SIL.F k=3  SIL.F k=4  SIL.F k=5  SIL.F k=6 
+## 0.31672170 0.25337145 0.22778222 0.18049682 0.04819403</code></pre>
+<pre><code>## Number of clusters 
+##                  2</code></pre>
+<pre><code>##                              Cluster Membership degree
+## Abilene Christian University       1         0.6790239
+## Adelphi University                 1         0.3322147
+## Adrian College                     1         0.8792647
+## Agnes Scott College                2         0.4857581
+## Alaska Pacific University          1         0.4826669
+## Albertson College                  1         0.7717227</code></pre>
+<pre><code>## Clus 1 Clus 2 
+##    378    399</code></pre>
+<pre><code>##              Apps     Accept     Enroll   Top10perc  Top25perc
+## Clus 1 -0.5161587 -0.4964291 -0.5822071 -0.25841635  0.3637176
+## Clus 2 -0.2001545 -0.0933471 -0.3691151 -0.03166366 -0.0907182
+##        F.Undergrad P.Undergrad     Outstate  Room.Board      Books
+## Clus 1  -0.5753949  -0.5282986 -0.000166353 -0.46277746 -0.1476691
+## Clus 2  -0.4617965  -0.4048119  0.741814201  0.06152443 -0.6019244
+##          Personal        PhD   Terminal  S.F.Ratio perc.alumni
+## Clus 1  0.1615159 -0.5916303 -0.5231976 -0.5784492  -0.2214276
+## Clus 2 -0.2077214  0.7557356  0.6315087 -0.2752925   0.2627635
+##             Expend   Grad.Rate
+## Clus 1 -0.32942310 -0.08518717
+## Clus 2 -0.04886681  0.38053265</code></pre>
+<pre><code>##      
+##         1   2
+##   No  105 107
+##   Yes 273 292</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-559-1.png" width="768" /><img src="index_files/figure-html/unnamed-chunk-559-2.png" width="768" /></p>
+</div>
+</div>
+<div id="model-based-clustering" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Model Based Clustering<a href="cluster-analysis.html#model-based-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## fitting ...
+##   |                                                                    |                                                            |   0%  |                                                                    |                                                            |   1%  |                                                                    |=                                                           |   2%  |                                                                    |==                                                          |   3%  |                                                                    |==                                                          |   4%  |                                                                    |===                                                         |   5%  |                                                                    |===                                                         |   6%  |                                                                    |====                                                        |   6%  |                                                                    |====                                                        |   7%  |                                                                    |=====                                                       |   8%  |                                                                    |=====                                                       |   9%  |                                                                    |======                                                      |   9%  |                                                                    |======                                                      |  10%  |                                                                    |=======                                                     |  11%  |                                                                    |=======                                                     |  12%  |                                                                    |========                                                    |  13%  |                                                                    |=========                                                   |  14%  |                                                                    |=========                                                   |  15%  |                                                                    |=========                                                   |  16%  |                                                                    |==========                                                  |  17%  |                                                                    |===========                                                 |  18%  |                                                                    |===========                                                 |  19%  |                                                                    |============                                                |  20%  |                                                                    |=============                                               |  21%  |                                                                    |=============                                               |  22%  |                                                                    |==============                                              |  23%  |                                                                    |==============                                              |  24%  |                                                                    |===============                                             |  24%  |                                                                    |===============                                             |  25%  |                                                                    |================                                            |  26%  |                                                                    |================                                            |  27%  |                                                                    |=================                                           |  28%  |                                                                    |=================                                           |  29%  |                                                                    |==================                                          |  30%  |                                                                    |==================                                          |  31%  |                                                                    |===================                                         |  31%  |                                                                    |===================                                         |  32%  |                                                                    |====================                                        |  33%  |                                                                    |====================                                        |  34%  |                                                                    |=====================                                       |  35%  |                                                                    |======================                                      |  36%  |                                                                    |======================                                      |  37%  |                                                                    |=======================                                     |  38%  |                                                                    |=======================                                     |  39%  |                                                                    |========================                                    |  39%  |                                                                    |========================                                    |  40%  |                                                                    |=========================                                   |  41%  |                                                                    |=========================                                   |  42%  |                                                                    |==========================                                  |  43%  |                                                                    |==========================                                  |  44%  |                                                                    |===========================                                 |  45%  |                                                                    |===========================                                 |  46%  |                                                                    |============================                                |  46%  |                                                                    |============================                                |  47%  |                                                                    |=============================                               |  48%  |                                                                    |=============================                               |  49%  |                                                                    |==============================                              |  50%  |                                                                    |===============================                             |  51%  |                                                                    |===============================                             |  52%  |                                                                    |================================                            |  53%  |                                                                    |================================                            |  54%  |                                                                    |=================================                           |  54%  |                                                                    |=================================                           |  55%  |                                                                    |==================================                          |  56%  |                                                                    |==================================                          |  57%  |                                                                    |===================================                         |  58%  |                                                                    |===================================                         |  59%  |                                                                    |====================================                        |  60%  |                                                                    |====================================                        |  61%  |                                                                    |=====================================                       |  61%  |                                                                    |=====================================                       |  62%  |                                                                    |======================================                      |  63%  |                                                                    |======================================                      |  64%  |                                                                    |=======================================                     |  65%  |                                                                    |========================================                    |  66%  |                                                                    |========================================                    |  67%  |                                                                    |=========================================                   |  68%  |                                                                    |=========================================                   |  69%  |                                                                    |==========================================                  |  69%  |                                                                    |==========================================                  |  70%  |                                                                    |===========================================                 |  71%  |                                                                    |===========================================                 |  72%  |                                                                    |============================================                |  73%  |                                                                    |============================================                |  74%  |                                                                    |=============================================               |  75%  |                                                                    |=============================================               |  76%  |                                                                    |==============================================              |  76%  |                                                                    |==============================================              |  77%  |                                                                    |===============================================             |  78%  |                                                                    |===============================================             |  79%  |                                                                    |================================================            |  80%  |                                                                    |=================================================           |  81%  |                                                                    |=================================================           |  82%  |                                                                    |==================================================          |  83%  |                                                                    |===================================================         |  84%  |                                                                    |===================================================         |  85%  |                                                                    |===================================================         |  86%  |                                                                    |====================================================        |  87%  |                                                                    |=====================================================       |  88%  |                                                                    |=====================================================       |  89%  |                                                                    |======================================================      |  90%  |                                                                    |======================================================      |  91%  |                                                                    |=======================================================     |  91%  |                                                                    |=======================================================     |  92%  |                                                                    |========================================================    |  93%  |                                                                    |========================================================    |  94%  |                                                                    |=========================================================   |  94%  |                                                                    |=========================================================   |  95%  |                                                                    |==========================================================  |  96%  |                                                                    |==========================================================  |  97%  |                                                                    |=========================================================== |  98%  |                                                                    |============================================================|  99%  |                                                                    |============================================================| 100%</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-573-1.png" width="768" /></p>
+<pre><code>## Best BIC values:
+##              VVE,9       VVE,8       VVE,7
+## BIC      -18547.17 -18671.4418 -18925.0659
+## BIC diff      0.00   -124.2717   -377.8958</code></pre>
+<pre><code>## ---------------------------------------------------- 
+## Gaussian finite mixture model fitted by EM algorithm 
+## ---------------------------------------------------- 
+## 
+## Mclust VVE (ellipsoidal, equal orientation) model with 9 components: 
+## 
+##  log-likelihood   n  df       BIC       ICL
+##       -7776.111 777 450 -18547.17 -18669.83
+## 
+## Clustering table:
+##   1   2   3   4   5   6   7   8   9 
+##  52 101  90 125 112  94  46  54 103</code></pre>
+<pre><code>## [1] 0.06622097 0.12792665 0.11481097 0.16651318 0.14552249 0.11773428
+## [7] 0.06014954 0.06941217 0.13170975</code></pre>
+<pre><code>##                   [,1]         [,2]        [,3]        [,4]
+## Apps        -0.4358710 -0.593517911 -0.65209566 -0.40506955
+## Accept      -0.3977427 -0.584991190 -0.66539034 -0.36932825
+## Enroll      -0.3943046 -0.587571366 -0.66409786 -0.37534237
+## Top10perc   -0.5616410 -0.448178918 -0.56708147 -0.18964173
+## Top25perc   -0.7379122 -0.557615978 -0.62746672 -0.07642379
+## F.Undergrad -0.3905954 -0.571252335 -0.60638527 -0.40197641
+## P.Undergrad -0.0410268 -0.450581712 -0.29816621 -0.24860839
+## Outstate    -0.3158232 -0.418279996 -0.04383405 -0.17686480
+## Room.Board  -0.1756398 -0.611997031  0.10139524 -0.14251361
+## Books        1.0211817 -0.257319000 -0.34894509 -0.16294791
+## Personal     0.6656954  0.008950973 -0.31519025 -0.13539388
+## PhD         -1.3001876 -0.549293948 -0.98097181 -0.09152328
+## Terminal    -0.6956987 -0.852898788 -0.74341522 -0.15534845
+## S.F.Ratio    0.5713960 -0.024715662 -0.66699155  0.13496876
+## perc.alumni -0.7042551 -0.360056235  0.26488042 -0.07388110
+## Expend      -0.2210129 -0.424125100 -0.23933607 -0.35857153
+## Grad.Rate   -0.4964314 -0.470218641 -0.10897968  0.11674254
+##                    [,5]       [,6]         [,7]       [,8]
+## Apps         0.15564458 -0.4289122  0.003453231  2.2346636
+## Accept       0.21189478 -0.3852465 -0.140276201  1.7655669
+## Enroll       0.13747312 -0.4488426 -0.305052283  1.7772492
+## Top10perc   -0.23293031  0.4368474  1.494324110  1.8277878
+## Top25perc   -0.16989084  0.4799023  1.409442981  1.4550356
+## F.Undergrad  0.09382727 -0.4898391 -0.378439810  1.6372179
+## P.Undergrad  0.06728724 -0.5143079 -0.522065187  0.7506832
+## Outstate    -0.27918412  0.8082375  1.888759688  0.6620942
+## Room.Board   0.11818109  0.2480671  1.070765307  0.7524475
+## Books       -0.01409765 -0.3282837  0.451336662  0.3166973
+## Personal     0.09028468 -0.6749934 -0.616045627  0.1790149
+## PhD          0.12460431  0.5715497  1.059709710  1.0637864
+## Terminal     0.02628736  0.6443627  1.069427720  0.9604501
+## S.F.Ratio    0.48090902 -0.4721405 -0.835966601 -0.8059154
+## perc.alumni -0.42202427  0.9967398  1.607482199  0.2403655
+## Expend      -0.32077044  0.3324637  1.299720620  2.0012796
+## Grad.Rate    0.04547957  0.4027904  1.212443492  0.5775395
+##                    [,9]
+## Apps         0.90832327
+## Accept       1.05894953
+## Enroll       1.27437183
+## Top10perc   -0.32706373
+## Top25perc   -0.09557148
+## F.Undergrad  1.43220268
+## P.Undergrad  1.26067249
+## Outstate    -0.79864151
+## Room.Board  -0.46335361
+## Books        0.18268539
+## Personal     0.79314220
+## PhD          0.46489098
+## Terminal     0.42302579
+## S.F.Ratio    0.84469562
+## perc.alumni -0.71917057
+## Expend      -0.40601348
+## Grad.Rate   -0.61465582</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-577-1.png" width="768" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-578-1.png" width="768" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dimensionality-reduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

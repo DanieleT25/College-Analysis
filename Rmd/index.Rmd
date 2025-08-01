@@ -34,19 +34,38 @@ library(here)
 library(DT)
 library(skimr)
 library(DataExplorer)
-#library(dplyr)
-#library(plotly)
+library(dplyr)
+library(plotly)
+library(ggplot2)
 library(gamlss)
 #library(gamlss.mx)
 library(mixR)
 
+library(R6)
+
+#library(ggsci)
+library(ggpubr)
 library(corrplot)
 library(factoextra)
 library(knitr)
 library(kableExtra)
 library(dplyr)
+
+library(clustertend)
+library(NbClust)
+library(dbscan)
+
+library(ClusterR)
+library(clValid)
+library(fpc)
+library(fclust)
+library(mclust)
 ```
 
+```{r}
+data(College)
+num_data <- College[sapply(College, is.numeric)]
+```
 
 ## Table of Contents {-}
 

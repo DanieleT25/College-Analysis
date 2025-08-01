@@ -3,10 +3,9 @@
 variable <- get(data)[[var]]
 if(var == "perc.alumni") {
   variable <- College$perc.alumni[College$perc.alumni > 0]
-  model <- fitDist(variable, type = "realplus", trace=FALSE)
-} else {
-  model <- fitDist(variable, type = "realplus", trace=FALSE)
 }
+
+model <- fitDist(variable, type = "realplus", trace=FALSE)
 ```
 
 <div class="hscroll-plot">
@@ -39,4 +38,30 @@ if (all(is.finite(residuals(pltMod)))) {
 
 ```{r}
 summary(model)
+```
+
+```{r}
+family_name <- model$family[1]
+cdf_function_name <- paste0("p", family_name)
+cdf_function <- get(cdf_function_name)
+
+```
+
+```{r}
+params <- pltMod[c("mu", "sigma", "nu", "tau")]
+params <- params[!sapply(params, is.null)]
+```
+
+```{r}
+theoretical_cdf <- function(x) {
+  do.call(cdf_function, c(list(q = x), params))
+}
+```
+
+```{r}
+ks_test_res <- ks.test(unique(variable), theoretical_cdf, simulate.p.value = TRUE, B = 10000)
+```
+
+```{r}
+ks_test_res
 ```

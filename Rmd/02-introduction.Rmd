@@ -10,7 +10,7 @@ The dataset used is the College dataset from the ISLP (Introduction to Statistic
 datatable(head(College, 100), options = list(scrollX = TRUE))
 ```
 
-## Variable Descriptions
+#### Variable Descriptions {-}
 
 The dataset includes a mix of numerical and categorical variables. Key attributes include:
 
@@ -36,7 +36,7 @@ The dataset includes a mix of numerical and categorical variables. Key attribute
 skim(College)
 ```
 
-## Analysis Objectives
+#### Analysis Objectives {-}
 
 The primary goal of this project is to uncover underlying patterns in the structure of U.S. colleges using unsupervised learning. We aim to:
 

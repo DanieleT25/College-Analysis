@@ -5,7 +5,6 @@ source(here::here("R", "dimReducFunction.R"))
 ```
 
 ```{r}
-num_data <- College[sapply(College, is.numeric)]
 corr_matrix <- cor(num_data)
 ```
 
@@ -106,9 +105,54 @@ plotLoadingsTable(pca, n_pc, threshold)
 
 Let's apply **Kaiser's rule**
 
-```{r fig.width=12, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
 kaiserRule(pca)
 ```
+</div>
+
+<div class='plot-container'>
+```{r}
+# Estrai i primi 3 componenti dalla PCA
+components <- as.data.frame(pca$x[, 1:3])
+colnames(components) <- c("PC1", "PC2", "PC3")
+
+# Inverti eventualmente assi per migliorare interpretabilità
+components$PC2 <- -components$PC2
+components$PC3 <- -components$PC3
+
+# Aggiungi variabile "Private"
+components$Private <- College$Private
+
+# Calcola varianza spiegata totale
+tot_explained_variance <- summary(pca)[["importance"]]["Proportion of Variance", 1:3]
+tot_explained_variance_ratio <- round(sum(tot_explained_variance) * 100, 2)
+
+tit <- paste0("Total Explained Variance = ", tot_explained_variance_ratio, "%")
+
+# Grafico 3D con plotly
+fig <- plot_ly(
+  components,
+  x = ~PC1, y = ~PC2, z = ~PC3,
+  color = ~Private,
+  colors = c('#636EFA','#EF553B')  # colori per "Yes" e "No"
+) %>%
+  add_markers(size = 5) %>%
+  layout(
+    title = tit,
+    scene = list(
+      xaxis = list(title = "PC1"),
+      yaxis = list(title = "PC2"),
+      zaxis = list(title = "PC3"),
+      bgcolor = "#e5ecf6"
+    )
+  )
+
+fig
+```
+</div>
+</div>
 
 The PC four is on the line and the variable that it explain better are inside the first PC.
 

@@ -1,7 +1,13 @@
 introduction
-variable-descriptions
-analysis-objectives
 univariate-analysis
 dimensionality-reduction
-clustering
+cluster-analysis
+feasibility-of-the-cluster-analysis
+hard-clustering
+hierarchical-clustering
+partional-clustering
+cluster-validation
+soft-clustering
+fuzzy-clustering
+model-based-clustering
 conclusion

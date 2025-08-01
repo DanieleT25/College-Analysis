@@ -1,7 +1,3 @@
-library(dplyr)
-library(plotly)
-library(ggplot2)
-
 plotBoxPlot <- function(vec, nameVariable) {
   media <- mean(vec)
   
