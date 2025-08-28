@@ -1,0 +1,112 @@
+### Density-based clustering
+
+Density-based clustering offers an alternative approach to partitioning methods, as it does not require the number of clusters to be specified in advance. The underlying idea is that clusters correspond to high-density regions in the data space, separated by low-density areas. In this section, two main algorithms are applied: **DBSCAN** (Density-Based Spatial Clustering of Applications with Noise), which identifies groups of points with sufficient density and distinguishes noise points, and **OPTICS** (Ordering Points To Identify the Clustering Structure), which extends DBSCAN by enabling the detection of clusters with varying densities.
+
+#### DBSCAN {-}
+
+**Setting parameters for DBSCAN** | From [Documentation of dbscan package](https://cran.r-project.org/web/packages/dbscan/refman/dbscan.html#dbscan) function `dbscan`
+
+The parameters minPts and eps define the minimum density required in the area around core points which form the backbone of clusters. minPts is the number of points required in the neighborhood around the point defined by the parameter eps (i.e., the radius around the point). Both parameters depend on each other and changing one typically requires changing the other one as well. The parameters also depend on the size of the data set with larger datasets requiring a larger minPts or a smaller eps.
+
+* ⁠minPts:⁠ The original DBSCAN paper (Ester et al, 1996) suggests to start by setting $minPts \geq d + 1$, the data dimensionality plus one or higher with a minimum of 3. Larger values are preferable since increasing the parameter suppresses more noise in the data by requiring more points to form clusters. Sander et al (1998) uses in the examples two times the data dimensionality. Note that setting 
+$minPts \leq 2$ is equivalent to hierarchical clustering with the single link metric and the dendrogram cut at height eps.
+
+* ⁠eps:⁠ A suitable neighborhood size parameter eps given a fixed value for minPts can be found visually by inspecting the kNNdistplot() of the data using $k=minPts−1$ (minPts includes the point itself, while the k-nearest neighbors distance does not). The k-nearest neighbor distance plot sorts all data points by their k-nearest neighbor distance. A sudden increase of the kNN distance (a knee) indicates that the points to the right are most likely outliers. Choose eps for DBSCAN where the knee is.
+
+```{r}
+minPts <- ncol(df)+1
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+kNNdistplot(df, minPts-1, minPts)
+abline(h = 4, lty = 2)
+```
+</div>
+
+```{r}
+eps <- 4
+res <- dbscan(df, eps, minPts)
+```
+
+<div class='plot-container'>
+```{r}
+hullplot(df, res)
+```
+</div>
+</div>
+
+Here, the elbow method is somewhat difficult to interpret because there is no clear gap, and the resulting plot (on the right) is not satisfactory.
+
+#### Optics {-}
+
+This implementation of OPTICS implements the original algorithm as described by Ankerst et al (1999). OPTICS is an ordering algorithm with methods to extract a clustering from the ordering.
+
+OPTICS linearly orders the data points such that points which are spatially closest become neighbors in the ordering. The closest analog to this ordering is dendrogram in single-link hierarchical clustering.
+
+```{r}
+resOptics <- optics(df, minPts = minPts)
+```
+
+```{r}
+plot(resOptics)
+```
+
+**Extracting a clustering** | From [Documentation of dbscan package](https://cran.r-project.org/web/packages/dbscan/refman/dbscan.html#optics) function `optics`
+
+Several methods to extract a clustering from the order returned by OPTICS are implemented:
+
+* `extractDBSCAN()` extracts a clustering from an OPTICS ordering that is similar to what DBSCAN would produce with an eps set to eps_cl (see Ankerst et al, 1999). The only difference to a DBSCAN clustering is that OPTICS is not able to assign some border points and reports them instead as noise.
+
+* `extractXi()` extract clusters hierarchically specified in Ankerst et al (1999) based on the steepness of the reachability plot. One interpretation of the xi parameter is that it classifies clusters by change in relative cluster density. The used algorithm was originally contributed by the ELKI framework and is explained in Schubert et al (2018), but contains a set of fixes.
+
+#### extractDBSCAN() with eps_cl=1.61 {-}
+
+```{r}
+resOpt <- extractDBSCAN(resOptics, eps_cl = 1.61)
+
+k <- length(unique(resOpt$cluster))
+my_colors <- pal_jco("default")(k)
+palette(my_colors)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+plot(resOpt)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+hullplot(df, resOpt)
+```
+</div>
+</div>
+
+#### extractXi() with xi=0.01 {-}
+
+```{r}
+resXi <- extractXi(resOptics, xi=0.01)
+
+k <- length(unique(resXi$cluster))
+my_colors <- pal_jco("default")(k)
+palette(my_colors)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+plot(resXi)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+hullplot(df, resXi)
+```
+</div>
+</div>
+
+Finally, **both DBSCAN and OPTICS yield unsatisfactory results**.

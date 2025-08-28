@@ -42,19 +42,23 @@ screePlot <- function(pca, cumulative=FALSE) {
   plotScreeCore(df, y_val, y_label, y_text, title)
 }
 
-createLoadingsDf <- function(pca, n_pc, threshold) {
-  loadings_df <- as.data.frame(pca$rotation[, 1:n_pc])
-  loadings_df <- loadings_df %>%
-    mutate(across(everything(), ~ ifelse(abs(.) > threshold, round(., 3), "")))
+plotLoadingsTable <- function(pca, columns=TRUE) {
+  loadings <- sweep(pca$rotation, 2, pca$sdev, FUN="*")
   
-  return(loadings_df)
-}
-
-
-plotLoadingsTable <- function(pca, n_pca, threshold) {
-  loadings_df <- createLoadingsDf(pca, n_pca, threshold)
+  if (columns) {
+    col_sums <- apply(loadings^2, 2, sum)
+    varPC_num <- round(sweep(loadings^2, 2, col_sums, FUN="/") * 100, 2)
+  } else {
+    varPC_num <- round(loadings^2 * 100, 2)
+  }
   
-  kable(loadings_df, align = "c", booktabs = TRUE) %>%
+  varPC_df <- as.data.frame(varPC_num)
+  rownames(varPC_df) <- rownames(pca$rotation)
+  
+  varPC_fmt <- as.data.frame(apply(varPC_df, 2, function(x) paste0(x, "%")))
+  rownames(varPC_fmt) <- rownames(varPC_df)
+  
+  kable(varPC_fmt, align = "c", booktabs = TRUE) %>%
     kable_styling(full_width = TRUE, bootstrap_options = c("striped", "hover"))
 }
 

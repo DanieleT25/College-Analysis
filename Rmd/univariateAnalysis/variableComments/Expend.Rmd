@@ -1,0 +1,5 @@
+The **Expend** variable is well modeled by the **Box-Cox Power Exponential (BCPE)**.
+
+All parameters are highly significant, residuals follow approximately a $N(0,1)$ distribution, and the **Kolmogorov–Smirnov test** (D = 0.026043, p-value = 0.6939) fails to reject the null hypothesis.
+
+This indicates a **very good fit**.

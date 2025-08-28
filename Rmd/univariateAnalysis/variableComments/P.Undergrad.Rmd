@@ -1,0 +1,10 @@
+The **P.Undergrad** variable is extremely **concentrated near zero** and highly **right-skewed** with large outliers.
+
+The selected model is the **Box-Cox Power Exponential-original (BCPEo)**. All parameters $\theta = (\hat\mu, \hat\sigma, \hat\nu, \hat\tau)$ are significant.
+
+However, diagnostic checks reveal problems:
+
+* the **residual density** is asymmetric;
+* the **Kolmogorov–Smirnov test** (D = 0.14887, p-value = 2.545e-11) rejects the null hypothesis.
+
+Thus, despite parameter significance, the **BCPEo distribution does not provide an adequate fit**.

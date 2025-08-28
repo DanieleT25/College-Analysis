@@ -120,6 +120,20 @@
             <section class="normal" id="section-">
 <div id="conclusion" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">5</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In conclusion, the univariate analysis showed that not all fitted models are suitable for every variable.</p>
+<p>Regarding the College dataset, the application of PCA is not entirely appropriate since the variables with the strongest correlations represent subsequent stages of the admissions process (such as Apps, Accept, and Enroll). The first two principal components alone are insufficient: to reach 80% of explained variance, at least six components are required.</p>
+<p>However, by applying Kaiser’s rule, it is possible to reduce the dimensionality of the dataset to three meaningful principal components:</p>
+<ul>
+<li><strong>PC1 – Academic Prestige and Student Spending</strong>: Captures the level of academic prestige and quality of a college. Higher values correspond to selective institutions with strong resources and qualified faculty.</li>
+<li><strong>PC2 – Size and Enrollment Volume</strong>: Reflects the size of the institution and the scale of its admissions process. Lower values indicate larger colleges with high enrollment volumes.</li>
+<li><strong>PC3 – Personal and Book Expenses</strong>: Represents student-related out-of-pocket costs. Negative values indicate higher personal living and study material expenses.</li>
+</ul>
+<p>Finally, the clustering analysis revealed that the most effective algorithm was k-means++, which identified two clusters that aligned well with the distinction between private and public colleges. The classic k-means with three clusters, however, uncovered additional patterns:</p>
+<ul>
+<li><strong>Cluster 1 (blue)</strong>: Located at the lower end of PC2, grouping larger institutions with high enrollment volumes, but not necessarily characterized by high academic prestige.</li>
+<li><strong>Cluster 2 (yellow)</strong>: Shows higher values on PC1, representing selective and prestigious universities with better resources and faculty quality.</li>
+<li><strong>Cluster 3 (gray)</strong>: Positioned closer to the origin, representing medium-sized institutions with intermediate levels of prestige.</li>
+</ul>
 
 </div>
             </section>

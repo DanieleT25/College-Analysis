@@ -1,0 +1,5 @@
+The **Terminal** variable was modeled with the **Beta (BE)** distribution.
+
+Although the parameter estimates are reasonable, **residual** diagnostics show values **outside the 95% confidence interval** and the **Kolmogorov–Smirnov test rejects the null hypothesis**.
+
+Hence, the **BE model is not a suitable fit**.

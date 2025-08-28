@@ -1,0 +1,8 @@
+The **Personal** variable is **right-skewed** with **outliers**.
+
+The **Lognormal (LOGNO)** distribution was tested but performed poorly:
+
+* residual diagnostics deviate from normality;
+* the Kolmogorov–Smirnov test confirms lack of fit.
+
+Thus, the **LOGNO model is not adequate for this variable**.

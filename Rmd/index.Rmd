@@ -43,7 +43,7 @@ library(mixR)
 
 library(R6)
 
-#library(ggsci)
+library(ggsci)
 library(ggpubr)
 library(corrplot)
 library(factoextra)
@@ -51,6 +51,8 @@ library(knitr)
 library(kableExtra)
 library(dplyr)
 
+library(cluster)
+#library(caret)
 library(clustertend)
 library(NbClust)
 library(dbscan)
@@ -73,7 +75,5 @@ num_data <- College[sapply(College, is.numeric)]
 - [1. Introduction](introduction.html)
 - [2. Univariate Analysis](univariate-analysis.html)
 - [3. Dimensionality Reduction](dimensionality-reduction.html)
-- [4. Cluster Analysis](clustering.html)
+- [4. Cluster Analysis](cluster-analysis.html)
 - [5. Conclusion](conclusion.html)
-
-This is the report of Unsupervised learning.

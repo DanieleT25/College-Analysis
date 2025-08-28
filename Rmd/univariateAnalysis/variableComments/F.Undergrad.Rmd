@@ -1,0 +1,10 @@
+The **F.Undergrad** variable is highly **right-skewed** with several large outliers.
+
+The **Generalized Inverse Gaussian (GIG)** model fits well, with all three parameters $\hat\mu, \hat\sigma, \hat\nu$ highly significant.
+
+Residual diagnostics show:
+
+* quantile residuals approximately distributed as $N(0,1)$, with some fluctuations;
+* the worm plot indicates heavier tails (S-shaped curve), suggesting excess kurtosis.
+
+The **Kolmogorov–Smirnov test** (D = 0.044836, p-value = 0.1133) fails to reject the null hypothesis, supporting a satisfactory fit, though not perfect in the tails.

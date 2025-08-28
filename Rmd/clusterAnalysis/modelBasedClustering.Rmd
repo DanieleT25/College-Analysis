@@ -1,0 +1,43 @@
+### Model Based Clustering
+
+One disadvantage of traditional clustering methods, such as hierarchical and partitioning clustering algorithms, is that they are largely heuristic and not based on formal models.
+
+An alternative is model-based clustering that use **probabilistic assumptions**.
+
+```{r}
+invisible(
+    capture.output(
+      mbc <- Mclust(dataScale)
+    )
+)
+```
+
+```{r}
+fviz_mclust(mbc, "BIC", palette = "jco")
+```
+
+```{r}
+summary(mbc$BIC)
+```
+
+Using the **Mclust** function, the best model selected is **VVE**, which corresponds to clusters with variable volume and shape but equal orientation, with $k=9$.
+
+```{r}
+summary(mbc)
+```
+
+However, from a graphical point of view, the result is very difficult to interpret.
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_mclust(mbc, "classification", palette = "jco", geom = "point", ellipse.type = "norm", ggtheme = theme_minimal(), labelsize = 0)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_mclust(mbc, "uncertainty", palette = "jco")
+```
+</div>
+</div>

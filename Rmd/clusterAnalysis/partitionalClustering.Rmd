@@ -1,0 +1,156 @@
+### Partional clustering
+
+Now, let us apply algorithms of partitioning clustering, such as **k-means** and **k-medoids**. We also apply **k-means++**, which selects the initial centroids in a way that reduces the probability of choosing centroids that are too close to each other.
+
+We observe that, for $k = 2$, k-means++ successfully identifies the separation between private and public colleges, unlike the classic k-means. However, for $k = 3$, the behavior is essentially the same.
+
+#### K-means {-}
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, kmeans, method="wss") + geom_vline(xintercept = 5, linetype=2) + labs(subtitle = "K-means: Elbow method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, kmeans, method="silhouette") + labs(subtitle = "K-means: Silhouette method")
+```
+</div>
+</div>
+
+##### NbClust function {-}
+```{r}
+nb_kmean <- NbClust(df, min.nc=2, max.nc=10, method="kmeans")
+```
+
+##### Three clusters {-}
+
+```{r}
+kmeans3 <- eclust(df, "kmeans", k = 3, graph = FALSE)
+```
+
+<div class="hscroll-plot" style='height:700px'>
+<div class='plot-container'>
+```{r}
+fviz_cluster(kmeans3, ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+</div>
+
+<div class='plot-container'>
+```{r message=FALSE}
+fviz_silhouette(kmeans3, palette="jco", ggtheme=theme_classic())
+```
+</div>
+</div>
+
+Classic k-means with $k = 3$ performs better than hierarchical clustering, but it is still difficult to clearly distinguish three separate clusters. It should also be noted that the total variance explained by the first two principal components is relatively low.
+
+The silhouette plot shows that the elements within each cluster do not achieve a high silhouette score.
+
+#### K-means++ {-}
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, KMeans_rcpp, method = "wss") +
+  geom_vline(xintercept = 6, linetype = 2) +
+  labs(subtitle = "K-means++: Elbow method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, KMeans_rcpp, method = "silhouette") +
+  labs(subtitle = "K-means++:  Silhouette method")
+```
+</div>
+</div>
+
+##### Two clusters {-}
+
+```{r}
+kmeansPlus2 <- KMeans_rcpp(df, 2)
+```
+
+<div class="hscroll-plot" style='height:700px'>
+<div class='plot-container'>
+```{r}
+fviz_cluster(list(data=df, cluster=kmeansPlus2$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+</div>
+
+<div class='plot-container'>
+```{r message=FALSE}
+sil <- silhouette(kmeansPlus2$cluster, dist(df))
+
+fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic())
+```
+</div>
+</div>
+
+```{r}
+true_labels <- as.factor(College$Private)
+
+pred_clustersKmeans <- kmeansPlus2$cluster
+
+pred_labelsKmeans <- factor(ifelse(pred_clustersKmeans == 1, "Yes", "No"),
+                       levels = levels(true_labels))
+
+table(pred_labelsKmeans, true_labels)
+```
+
+The k-means++, with some errors, is able to identify the private and the public college and the average silhouette width has a better score than others algorithms.
+
+#### K-medoids {-}
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, pam, method = "silhouette", metric="euclidean") +
+  labs(subtitle = "K-medoids(euclidean): Silhouette method")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+fviz_nbclust(df, pam, method = "silhouette", metric="manhattan") +
+  labs(subtitle = "K-medoids(manhattan): Silhouette method")
+```
+</div>
+</div>
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+kmedoidsEucl3 <- pam(df, 3, metric = "euclidean")
+fviz_cluster(list(data=df, cluster=kmedoidsEucl3$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())  + ggtitle("Clustering con K-Medoids (Euclidean)")
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+kmedoidsManh3 <- pam(df, 3, metric = "manhattan")
+fviz_cluster(list(data=df, cluster=kmedoidsManh3$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())  + ggtitle("Clustering con K-Medoids (Manhattan)")
+```
+</div>
+</div>
+
+<div class="hscroll-plot" style='height:700px'>
+<div class='plot-container'>
+```{r}
+fviz_silhouette(kmedoidsEucl3, palette="jco", ggtheme=theme_classic())
+```
+</div>
+
+<div class='plot-container'>
+```{r message=FALSE}
+fviz_silhouette(kmedoidsManh3, palette="jco", ggtheme=theme_classic())
+```
+</div>
+</div>
+
+The K-medoids algorithm is more robust to outliers, and when using the Manhattan distance instead of the Euclidean distance, it yields better results in terms of the average silhouette width.

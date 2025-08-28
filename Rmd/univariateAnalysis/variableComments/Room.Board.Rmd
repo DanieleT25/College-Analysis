@@ -1,0 +1,8 @@
+The **Room.Board** variable shows a **mild right skew**.
+
+The Gamma distribution provides a reasonably good fit:
+
+* parameters $(\hat\mu, \hat\sigma)$ are significant;
+*	residual diagnostics are satisfactory, though minor imperfections appear in the upper tail and in the quantile residuals.
+
+The **Kolmogorov–Smirnov test** (D = 0.052409, p-value = 0.09587) fails to reject the null hypothesis, supporting the adequacy of the Gamma model.

@@ -4,10 +4,9 @@ rmd_files: [
   "Rmd/index.Rmd",
   "Rmd/01-abstract.Rmd",
   "Rmd/02-introduction.Rmd",
-  "Rmd/03-univariate.Rmd",
-  "Rmd/04-dimensionality_reduction.Rmd",
-  "Rmd/05-cluster_analysis.Rmd",
+  "Rmd/univariateAnalysis/03-univariate.Rmd",
+  "Rmd/principalComponentAnalysis/04-dimensionality_reduction.Rmd",
+  "Rmd/clusterAnalysis/05-cluster_analysis.Rmd",
   "Rmd/06-conclusion.Rmd"
 ]
 clean: TRUE
-

@@ -1,0 +1,5 @@
+The **Grad.Rate** variable is slightly **left-skewed**.
+
+The **Generalized beta type 1 (GB1)** distribution provides a reasonable graphical fit, with residuals showing no major problems.
+
+However, the **Kolmogorov–Smirnov test** (D = 0.19321, p-value = 0.004664) rejects the null hypothesis, suggesting that the GB1 model does not fully capture the distribution.

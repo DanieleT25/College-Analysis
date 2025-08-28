@@ -1,0 +1,14 @@
+The **Apps** variable shows a highly **right-skewed** distribution with several **high-value outliers**. The boxplot reveals that most institutions received a relatively low number of applications, while some colleges stand out with exceptionally high values, in some cases exceeding 20,000, with one extreme case near 50,000.
+
+The histogram with KDE estimation highlights the strong concentration in the lower range and the presence of a long right tail. The distribution fitted using the **Generalized Inverse Gaussian (GIG)** model provides a good approximation, capturing both the skewness and the general shape of the distribution.
+
+The estimates of **$\hat\mu$ and $\hat\sigma$ are more significant**, with values of about 8 and 0.32. The **$\hat\nu$** is slightly less significant than others parameters, with a value of about -0.31.
+
+The residual diagnostic plots suggest an adequate fit:
+
+* the Q-Q plot indicates **a good alignment of the residuals with the theoretical normal distribution**, with only minor deviations in the tails;
+* the residual density is approximately **symmetric** and **centered** around zero.
+
+The worm plot supports these findings: **most points lie within the confidence bands**, with only mild systematic deviations in the tails. This indicates that the GIG model provides a satisfactory description of the data, although it may not perfectly capture the most extreme cases.
+
+Finally, the Kolmogorov–Smirnov test (D = 0.0315, p-value = 0.4803) **fails to reject the null hypothesis**, further confirming the goodness of fit. Overall, the GIG distribution represents an appropriate choice to model the Applications variable.

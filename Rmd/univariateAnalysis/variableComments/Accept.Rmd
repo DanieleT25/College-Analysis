@@ -1,0 +1,9 @@
+The **Accept** variable also shows a highly **right-skewed** distribution with several **high-value outliers**, similar to the Applications variable.
+
+The distribution fitted using the **Inverse Gaussian (IG)** model works very well. This model has two parameters, $\hat\mu$ and $\hat\sigma$, and both are highly significant.
+
+In the index plot, we can see that there is no dependency between rows (such as order effects). The quantile residuals are approximately distributed as $\mathcal{N}(0,1),$ therefore the model fits very well.
+
+The **Kolmogorov–Smirnov test** (D = 0.046259, p-value = 0.103) fails to reject the null hypothesis, further confirming the goodness of fit.
+
+Hence, the IG distribution represents an appropriate choice for modeling the Accepted variable.

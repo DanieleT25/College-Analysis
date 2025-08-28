@@ -1,0 +1,39 @@
+```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+if(var == "Outstate") {
+  model <- mixfit(College$Outstate,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+} else {
+  model <- mixfit(College$Books,
+                    family = "gamma",
+                    ncomp = 2, tol = 1e-06)
+}
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r results='hide'}
+pltMod <- plotHistModelMix(get(data)[[var]], model)
+```
+</div>
+</div>
+
+```{r}
+model
+```
+
+```{r}
+if (var == "Outstate") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Outstate.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Books") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Books.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+```

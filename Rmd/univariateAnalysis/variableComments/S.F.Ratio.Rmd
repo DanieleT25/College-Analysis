@@ -1,0 +1,3 @@
+The **S.F.Ratio** variable was modeled using **Generalized beta type 1 (GB1)**, but both residual analysis and the Kolmogorov–Smirnov test show poor fit.
+
+This indicates that the **GB1 distribution does not adequately describe the data**.

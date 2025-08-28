@@ -1,0 +1,3 @@
+The **Outstate** variable is only mildly **right-skewed**.
+
+The KDE reveals a structure that suggests a mixture distribution is appropriate. Therefore, a mixture of two Gamma distributions was selected, which successfully captures the observed pattern.

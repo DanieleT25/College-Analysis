@@ -1,0 +1,15 @@
+The **Top10perc** variable is highly **right-skewed**, with some **outliers above 65%**.
+
+The fitted distribution is the **Generalized Beta type 1 (GB1)**. Most parameters are significant, with the exception of
+$\hat\mu$.
+
+Diagnostic checks highlight several issues:
+
+* the worm plot shows points outside the 95% confidence bands;
+* the residual density is asymmetric;
+* the Kolmogorov–Smirnov test (D = 0.33988, p-value = 5.886e-09) rejects the null hypothesis.
+
+Hence, the **GB1 model does not adequately capture the distribution of this variable**.
+
+
+

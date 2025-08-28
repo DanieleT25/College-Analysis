@@ -1,0 +1,8 @@
+The **perc.alumni** variable was modeled with the **Beta-original (BEo)** distribution.
+
+Although the KDE and fitted distribution show some alignment, diagnostic checks reveal important issues:
+
+* quantile residuals exhibit kurtosis;
+* the **Kolmogorov–Smirnov test** (D = 0.26808, p-value = 0.0002684) rejects the null hypothesis.
+
+Thus, the BEo distribution provides only a partial description of the data.

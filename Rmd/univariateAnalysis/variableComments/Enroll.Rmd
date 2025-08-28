@@ -1,0 +1,7 @@
+The **Enroll** variable also shows a highly **right-skewed** distribution with several **high-value** outliers. However, in this case, there is a **slight increase** just before the value 2000, so the distribution is not monotonically decreasing.
+
+Even though the parameter estimates are significant, the **Generalised Inverse Gaussian (GIG)** model does not capture this small increase. This can be seen in the residual density plot (which is not symmetric) and in the worm plot (where some normal quantiles are very close to the 95% confidence interval).
+
+The **Kolmogorov–Smirnov test** (D = 0.081749, p-value = 0.0008482) rejects the null hypothesis.
+
+Hence, the GIG model fits well for values below 1000, but for values greater than 1000 the fit is less accurate.

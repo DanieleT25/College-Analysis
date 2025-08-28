@@ -6,7 +6,10 @@ feasibility-of-the-cluster-analysis
 hard-clustering
 hierarchical-clustering
 partional-clustering
+density-based-clustering
 cluster-validation
+external-clustering-validation
+stability-measures
 soft-clustering
 fuzzy-clustering
 model-based-clustering

@@ -1,0 +1,28 @@
+
+### `r title` {-}
+
+#### Descriptive statistics {-}
+
+<div class="hscroll-plot">
+<div class="plot-container">
+```{r}
+plotBoxPlot(get(data)[[var]], var)
+```
+
+</div>
+<div class="plot-container">
+```{r}
+print(plotHist(get(data)[[var]], var))
+```
+</div>
+</div>
+
+#### Distribution Fitting {-}
+
+```{r results='asis', warning=FALSE}
+if(var %in% c("Outstate", "Books")) {
+  cat(knitr::knit_child(here::here("Rmd/univariateAnalysis","mixModel.Rmd"), quiet = TRUE))
+} else {
+  cat(knitr::knit_child(here::here("Rmd/univariateAnalysis", "singleModel.Rmd"), quiet = TRUE))
+}
+```

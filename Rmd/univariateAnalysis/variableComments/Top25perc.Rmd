@@ -1,0 +1,5 @@
+The **Top25perc** distribution is more symmetric compared to Top10perc, although similar issues remain.
+
+In this case, the **Generalized Beta type 1  (GB1)** distribution again provides the best fit. However, the parameter $\hat\sigma$ is not significant.
+
+From a graphical perspective, the residuals behave better than in Top10perc, and the Kolmogorov–Smirnov test fails to reject the null hypothesis, suggesting an **acceptable overall fit despite some limitations**.

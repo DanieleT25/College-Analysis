@@ -1,0 +1,178 @@
+```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+variable <- get(data)[[var]]
+
+if(var %in% c("Top10perc", "Top25perc", "PhD", "Terminal", "S.F.Ratio", "perc.alumni", "Grad.Rate")) {
+  variable <- variable[variable > 0 & variable < 100]
+  variable <- variable / 100
+  model <- fitDist(variable, type = "real0to1", trace=FALSE)
+} else {
+  model <- fitDist(variable, type = "realplus", trace=FALSE)
+}
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r warning=FALSE, results='hide'}
+pltMod <- plotHistModel(variable, model)
+print(pltMod)
+```
+</div>
+
+<div class='plot-container'>
+```{r results='hide'}
+if (all(is.finite(residuals(pltMod)))) {
+  plot(pltMod)
+} else {
+  warning("Genral plot non eseguito: residui non finiti.")
+}
+```
+</div>
+
+<div class='plot-container'>
+```{r results='hide'}
+if (all(is.finite(residuals(pltMod)))) {
+  suppressWarnings(wp(model, ylim.all = TRUE))
+} else {
+  warning("Worm plot non eseguito: residui non finiti.")
+}
+```
+</div>
+</div>
+
+```{r}
+summary(model)
+```
+
+```{r}
+family_name <- model$family[1]
+cdf_function_name <- paste0("p", family_name)
+cdf_function <- get(cdf_function_name)
+
+```
+
+```{r}
+params <- pltMod[c("mu", "sigma", "nu", "tau")]
+params <- params[!sapply(params, is.null)]
+```
+
+```{r}
+theoretical_cdf <- function(x) {
+  do.call(cdf_function, c(list(q = x), params))
+}
+```
+
+```{r}
+ks_test_res <- ks.test(unique(variable), theoretical_cdf, simulate.p.value = TRUE, B = 10000)
+```
+
+```{r}
+ks_test_res
+```
+
+```{r}
+if (var == "Apps") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Apps.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Accept") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Accept.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Enroll") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Enroll.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Top10perc") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Top10perc.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Top25perc") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Top25perc.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "F.Undergrad") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "F.Undergrad.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "P.Undergrad") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "P.Undergrad.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Room.Board") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Room.Board.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Personal") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Personal.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "PhD") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "PhD.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Terminal") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Terminal.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "S.F.Ratio") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "S.F.Ratio.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "perc.alumni") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "perc.alumni.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Expend") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Expend.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+
+if (var == "Grad.Rate") {
+  knitr::asis_output(
+    knitr::knit_child(here::here("Rmd/univariateAnalysis/variableComments", "Grad.Rate.Rmd"),
+                      envir = env, quiet = TRUE)
+  )
+}
+```
+

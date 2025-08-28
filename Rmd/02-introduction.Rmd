@@ -20,17 +20,18 @@ The dataset includes a mix of numerical and categorical variables. Key attribute
 4. `Enroll`: number of students enrolled.
 5. `Top10perc`: percentage of students from the top 10% of their high school class.
 6. `Top25perc`: percentage from the top 25%.
-7. `F.Undergrad` , `P.Undergrad`: number of full-time and part-time undergraduates.
-8. `Outstate`: out-of-state tuition.
-9. `Room.Board`: estimated room and board cost.
-10. `Books`: estimated cost of books.
-11.	`Personal`: estimated personal spending.
-12.	`PhD`: percentage of faculty with a PhD.
-13.	`Terminal`: percentage with terminal degrees.
-14.	`S.F.Ratio`: student-faculty ratio.
-15.	`perc.alumni`: percentage of alumni who donate.
-16.	`Expend`: instructional expenditure per student.
-17.	`Grad.Rate`: graduation rate.
+7. `F.Undergrad`: number of full-time undergraduates.
+8. `P.Undergrad`: number of part-time undergraduates.
+9. `Outstate`: out-of-state tuition.
+10. `Room.Board`: estimated room and board cost.
+11. `Books`: estimated cost of books.
+12.	`Personal`: estimated personal spending.
+13.	`PhD`: percentage of faculty with a PhD.
+14.	`Terminal`: percentage with terminal degrees.
+15.	`S.F.Ratio`: student-faculty ratio.
+16.	`perc.alumni`: percentage of alumni who donate.
+17.	`Expend`: instructional expenditure per student.
+18.	`Grad.Rate`: graduation rate.
 
 ```{r, include=FALSE}
 skim(College)
@@ -40,7 +41,7 @@ skim(College)
 
 The primary goal of this project is to uncover underlying patterns in the structure of U.S. colleges using unsupervised learning. We aim to:
 
-1. Conduct univariate analysis to understand the distribution of individual features and explore possible groupings or transformations.
+1. Conduct univariate analysis to understand the distribution of individual features.
 2. Apply Principal Component Analysis (PCA) to reduce the dimensionality of the dataset and identify the main axes of variation.
 3. Perform clustering analysis to segment colleges into interpretable groups based on their institutional characteristics.
 

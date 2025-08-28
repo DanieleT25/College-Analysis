@@ -1,0 +1,185 @@
+### Fuzzy Clustering
+
+Here we compare the results of **FKMEN** with those of **FKMedN**. Other algorithms, such as **GK-FKM** and **GKB-FK**, were also tested, but they required too much computation time to provide results.
+
+```{r}
+dataScale <- scale(College[sapply(College, is.numeric)])
+```
+
+#### Fuzzy k-Means with Entropy regularization and Noise cluster {-}
+```{r}
+fuzzyValidation <- function(dataScale, seed = 123) {
+  index_list <- c("SIL.F", "PC", "PE", "MPC", "XB")
+  
+  run_fkm.ent.noise <- function(index_name) {
+    FKM.ent.noise(dataScale, RS = 10, index = index_name, seed = seed)
+  }
+  
+  lstFuzzy <- lapply(index_list, run_fkm.ent.noise)
+  names(lstFuzzy) <- index_list
+  
+  return(lstFuzzy)
+}
+```
+
+```{r}
+invisible(
+    capture.output(
+      results <- fuzzyValidation(dataScale)
+    )
+)
+```
+
+To select the optimal value of $k$, we rely on fuzziness measures such as:
+
+* Partition Coefficient (PC):
+```{r}
+results[["PC"]]$criterion
+```
+Best value at `r results[["PC"]]$k`
+
+* Modified Partition Coefficient (MPC)
+```{r}
+results[["MPC"]]$criterion
+```
+Best value at `r results[["MPC"]]$k`
+
+* Partition Entropy (PE)
+```{r}
+results[["PE"]]$criterion
+```
+Best value at `r results[["PE"]]$k`
+
+and on compactness/separation measures such as:
+
+* Xie and Beni (XB) index
+```{r}
+results[["XB"]]$criterion
+```
+Best value at `r results[["XB"]]$k`
+
+* Fuzzy Silhouette (FS) index
+```{r}
+results[["SIL.F"]]$criterion
+```
+Best value at `r results[["SIL.F"]]$k`
+
+According to these criteria, the optimal number of clusters is $k=2$, since the Fuzzy Silhouette (FS) index reaches the second highest value at $k=2$.
+
+Therefore, we apply FKMEN with $k=2$.
+
+```{r}
+fkm2 <- FKM.ent.noise(dataScale, k=2, RS=10, seed=123)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+pairs(dataScale, col=fkm2$clus[, 1], gap=0, pch=16, cex=0.4)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+plot.fclust(fkm2, pca=TRUE, col=my_colors)
+```
+</div>
+</div>
+
+```{r, echo=FALSE}
+datatable(head(fkm2$clus, 100), options = list(scrollX = TRUE))
+```
+
+The resulting clusters have the following characteristics:
+```{r}
+set.seed(123)
+cl.size(fkm2$U)
+```
+
+The centroids are given by:
+```{r}
+# Hraw(fkm2$X, fkm2$H)
+Hmat <- Hraw(fkm2$X, fkm2$H)
+Hdf <- as.data.frame(Hmat)
+rownames(Hdf) <- paste0("Clus ", 1:nrow(Hdf))
+```
+
+<div class="hscroll-plot" style="height: 300px;">
+<div class='plot-container'>
+```{r}
+knitr::kable(round(Hdf, 3))
+```
+</div>
+</div>
+
+The confusion matrix is:
+```{r}
+table(College$Private, fkm2$clus[, 1])
+```
+where the Rand index has value `r adjustedRandIndex(College$Private, fkm2$clus[, 1])`.
+
+#### FK-Med algorithm with Noise cluster (FK MedN algorithm) {-}
+```{r}
+invisible(
+    capture.output(
+      fkmedn <- FKM.med.noise(dataScale, RS=10, seed=123)
+    )
+)
+```
+
+By Fuzzy Silhouette (FS) index:
+```{r}
+fkmedn$criterion
+```
+The best value is `r fkmedn$k`.
+
+Therefore, we apply FKMedN with $k=2$.
+
+```{r}
+fkmedn <- FKM.med.noise(dataScale, k=2, RS=10, seed=123)
+```
+
+<div class="hscroll-plot">
+<div class='plot-container'>
+```{r}
+pairs(dataScale, col=fkmedn$clus[, 1], gap=0, pch=16, cex=0.4)
+```
+</div>
+
+<div class='plot-container'>
+```{r}
+plot.fclust(fkmedn, pca=TRUE, col=my_colors)
+```
+</div>
+</div>
+
+```{r, echo=FALSE}
+datatable(head(fkmedn$clus, 100), options = list(scrollX = TRUE))
+```
+
+The resulting clusters have the following characteristics:
+```{r}
+set.seed(123)
+cl.size(fkmedn$U)
+```
+
+The centroids are given by:
+```{r}
+Hmat <- Hraw(fkmedn$X, fkmedn$H)
+Hdf <- as.data.frame(Hmat)
+rownames(Hdf) <- paste0("Clus ", 1:nrow(Hdf))
+```
+
+<div class="hscroll-plot" style="height: 300px;">
+<div class='plot-container'>
+```{r}
+knitr::kable(round(Hdf, 3))
+```
+</div>
+</div>
+
+The confusion matrix is:
+```{r}
+table(College$Private, fkmedn$clus[, 1])
+```
+where the Rand index has value `r adjustedRandIndex(College$Private, fkmedn$clus[, 1])`.

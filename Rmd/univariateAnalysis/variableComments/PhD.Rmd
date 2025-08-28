@@ -1,0 +1,3 @@
+The **PhD** variable was fitted using the **Generalized Beta type 1 (GB1)**. However, the model does not fit well, as shown by residual diagnostics and the Kolmogorov–Smirnov test.
+
+Moreover, the fitting procedure raised convergence warnings, indicating potential instability in parameter estimation.

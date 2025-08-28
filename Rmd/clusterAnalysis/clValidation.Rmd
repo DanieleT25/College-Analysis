@@ -1,0 +1,191 @@
+### Cluster validation
+
+#### External clustering validation
+This is possible apply only on the result of K-means++ ($k=2$), because it is the unique clustering algorithem that identify the beahiour of the private and public college.
+
+```{r}
+true_labels_num <- as.numeric(College$Private)
+
+clust_stats <- cluster.stats(
+  d = dist(scale(College[, -1])), 
+  true_labels_num,
+  pred_clustersKmeans
+)
+```
+
+```{r}
+results_table <- data.frame(
+  Metric = c("Corrected Rand Index", "Meila's VI Index"),
+  Value = c(clust_stats$corrected.rand, clust_stats$vi)
+)
+
+kable(results_table, digits = 4, align = "c") %>%
+  kable_styling(full_width = TRUE)
+```
+
+Meila’s VI Index is not very high (its range is $(0, \infty)$), but the Corrected Rand Index is low.
+
+#### Stability measures
+
+```{r}
+# Hierarchical - Euclidean - Average - 2 clusters
+stab_hcEuclAvg2 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = hcEuclAvg2$cluster,
+  get_cluster_del = function(df_del) {
+    cutree(hclust(dist(df_del, method = "euclidean"), method = "average"), k = 2)
+  },
+  method = "euclidean"
+)
+
+# Hierarchical - Euclidean - Average - 5 clusters
+stab_hcEuclAvg5 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = hcEuclAvg5$cluster,
+  get_cluster_del = function(df_del) {
+    cutree(hclust(dist(df_del, method = "euclidean"), method = "average"), k = 5)
+  },
+  method = "euclidean"
+)
+
+# Hierarchical - Manhattan - Average - 2 clusters
+stab_hcManhAvg2 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = hcManhAvg2$cluster,
+  get_cluster_del = function(df_del) {
+    cutree(hclust(dist(df_del, method = "manhattan"), method = "average"), k = 2)
+  },
+  method = "manhattan"
+)
+
+# Hierarchical - Manhattan - Average - 8 clusters
+stab_hcManhAvg8 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = hcManhAvg8$cluster,
+  get_cluster_del = function(df_del) {
+    cutree(hclust(dist(df_del, method = "manhattan"), method = "average"), k = 8)
+  },
+  method = "manhattan"
+)
+
+# KMeans - 3 clusters
+stab_kmeans3 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = kmeans3$cluster,
+  get_cluster_del = function(df_del) {
+    eclust(df_del, "kmeans", k = 3, graph = FALSE)$cluster
+  },
+  method = "euclidean"
+)
+
+# KMeans++ - 2 clusters
+stab_kmeansPlus2 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = kmeansPlus2$cluster,
+  get_cluster_del = function(df_del) {
+    KMeans_rcpp(df_del, 2)$cluster
+  },
+  method = "euclidean"
+)
+
+# KMedoids - Euclidean - 3 clusters
+stab_kmedoidsEucl3 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = kmedoidsEucl3$clustering,
+  get_cluster_del = function(df_del) {
+    pam(df_del, 3, metric = "euclidean")$clustering
+  },
+  method = "euclidean"
+)
+
+# KMedoids - Manhattan - 3 clusters
+stab_kmedoidsManh3 <- get_stability_metrics_custom(
+  df = df,
+  original_cluster = kmedoidsManh3$clustering,
+  get_cluster_del = function(df_del) {
+    pam(df_del, 3, metric = "manhattan")$clustering
+  },
+  method = "manhattan"
+)
+```
+
+```{r}
+stability_table <- tibble::tibble(
+  Method = c(
+    "HC - Euclidean - Avg - k=2",
+    "HC - Euclidean - Avg - k=5",
+    "HC - Manhattan - Avg - k=2",
+    "HC - Manhattan - Avg - k=8",
+    "KMeans - k=3",
+    "KMeans++ - k=2",
+    "KMedoids - Euclidean - k=3",
+    "KMedoids - Manhattan - k=3"
+  ),
+  APN = c(
+    stab_hcEuclAvg2$APN,
+    stab_hcEuclAvg5$APN,
+    stab_hcManhAvg2$APN,
+    stab_hcManhAvg8$APN,
+    stab_kmeans3$APN,
+    stab_kmeansPlus2$APN,
+    stab_kmedoidsEucl3$APN,
+    stab_kmedoidsManh3$APN
+  ),
+  AD = c(
+    stab_hcEuclAvg2$AD,
+    stab_hcEuclAvg5$AD,
+    stab_hcManhAvg2$AD,
+    stab_hcManhAvg8$AD,
+    stab_kmeans3$AD,
+    stab_kmeansPlus2$AD,
+    stab_kmedoidsEucl3$AD,
+    stab_kmedoidsManh3$AD
+  ),
+  ADM = c(
+    stab_hcEuclAvg2$ADM,
+    stab_hcEuclAvg5$ADM,
+    stab_hcManhAvg2$ADM,
+    stab_hcManhAvg8$ADM,
+    stab_kmeans3$ADM,
+    stab_kmeansPlus2$ADM,
+    stab_kmedoidsEucl3$ADM,
+    stab_kmedoidsManh3$ADM
+  ),
+  FOM = c(
+    stab_hcEuclAvg2$FOM,
+    stab_hcEuclAvg5$FOM,
+    stab_hcManhAvg2$FOM,
+    stab_hcManhAvg8$FOM,
+    stab_kmeans3$FOM,
+    stab_kmeansPlus2$FOM,
+    stab_kmedoidsEucl3$FOM,
+    stab_kmedoidsManh3$FOM
+  )
+)
+
+kable(stability_table, digits = 4, align = "c", booktabs = TRUE) %>%
+  kable_styling(full_width = TRUE, bootstrap_options = c("striped", "hover"))
+```
+
+```{r}
+get_best_methods <- function(metrics_df) {
+  best_methods <- list()
+
+  best_methods[["Best APN"]] <- metrics_df$Method[which.min(metrics_df$APN)]
+  best_methods[["Best AD"]]  <- metrics_df$Method[which.min(metrics_df$AD)]
+  best_methods[["Best ADM"]] <- metrics_df$Method[which.min(metrics_df$ADM)]
+  best_methods[["Best FOM"]] <- metrics_df$Method[which.min(metrics_df$FOM)]
+
+  for (name in names(best_methods)) {
+    cat(name, ": \"", best_methods[[name]], "\"\n", sep = "")
+  }
+}
+```
+
+```{r}
+get_best_methods(stability_table)
+```
+
+From these stability measures, we can see that the most stable clustering algorithms are HC with Euclidean distance and average linkage ($k=2$), and K-means ($k=3$). However, the first solution yields only two clusters (with one of them has only one element). Therefore, K-means with $k=3$ is preferable.
+
+Finally, we should choose between k-means with $k=3$ and k-means++ with $k=2$.

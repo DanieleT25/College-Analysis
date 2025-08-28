@@ -3,3 +3,9 @@
 _Project for "Statistical Learning" course module unsupervised_
 
 _[Daniele Tambone](https://www.linkedin.com/in/daniele-tambone-b5733616a/) @ Dept of Math and Computer Science - Economics and Business, University of Catania_
+
+This project provides an analysis of the College dataset using unsupervised learning techniques.  
+It includes model estimation and parameter tuning to select the best models for the variables,  
+dimensionality reduction methods such as PCA, and clustering analysis to identify patterns within the data.
+
+You can install all the required packages by running `R/install_packages.R`.
