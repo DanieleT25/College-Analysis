@@ -9,8 +9,19 @@ However, by applying Kaiser’s rule, it is possible to reduce the dimensionalit
 * **PC2 – Size and Enrollment Volume**: Reflects the size of the institution and the scale of its admissions process. Lower values indicate larger colleges with high enrollment volumes.
 * **PC3 – Personal and Book Expenses**: Represents student-related out-of-pocket costs. Negative values indicate higher personal living and study material expenses.
 
-Finally, the clustering analysis revealed that the most effective algorithm was k-means++, which identified two clusters that aligned well with the distinction between private and public colleges. The classic k-means with three clusters, however, uncovered additional patterns:
+Finally, the clustering analysis revealed that the most effective algorithm was k-means++, which identified two clusters that aligned well with the distinction between private and public colleges.
+
+```{r}
+fviz_cluster(list(data=df, cluster=kmeansPlus2$cluster),
+              ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
+
+The classic k-means with three clusters, however, uncovered additional patterns:
 
 * **Cluster 1 (blue)**: Located at the lower end of PC2, grouping larger institutions with high enrollment volumes, but not necessarily characterized by high academic prestige.
 * **Cluster 2 (yellow)**: Shows higher values on PC1, representing selective and prestigious universities with better resources and faculty quality.
 * **Cluster 3 (gray)**: Positioned closer to the origin, representing medium-sized institutions with intermediate levels of prestige.
+
+```{r}
+fviz_cluster(kmeans3, ellipse.type="norm", geom="point", stand=FALSE, palette="jco", ggthem=theme_classic())
+```
